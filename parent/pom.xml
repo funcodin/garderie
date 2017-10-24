@@ -7,7 +7,7 @@
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>garderie-services</artifactId>
+    <artifactId>garderie-parent-pom</artifactId>
     <packaging>pom</packaging>
     <name>Garderie Parent POM</name>
     

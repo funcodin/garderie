@@ -7,6 +7,7 @@ import com.garderie.types.AbstractPersistable;
 public class Child extends AbstractPersistable{
 
 	private String firstName;
+	private String middleName;
 	private String lastName;
 	private List<String> parentIds;
 	private String orgId;
@@ -18,6 +19,12 @@ public class Child extends AbstractPersistable{
 	}
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+	public String getMiddleName() {
+		return middleName;
+	}
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
 	}
 	public String getLastName() {
 		return lastName;
@@ -49,4 +56,6 @@ public class Child extends AbstractPersistable{
 	public void setEmergencyContacts(List<EmergencyContact> emergencyContacts) {
 		this.emergencyContacts = emergencyContacts;
 	}
+	
+	
 }

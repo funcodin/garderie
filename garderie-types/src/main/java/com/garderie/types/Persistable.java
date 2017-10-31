@@ -12,14 +12,14 @@ import java.util.Date;
 public interface Persistable {
 	public String getId();
 
-	public void setId(String id);
+	public void setId(final String id);
 
 	public Date getCreatedDate();
 
-	public void setCreatedDate(Date createdDate);
+	public void setCreatedDate(final Date createdDate);
 
 	public Date getModifiedDate();
 
-	public void setModifiedDate(Date modifiedDate);
+	public void setModifiedDate(final Date modifiedDate);
 
 }

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.garderie.types;
 
 import java.util.Date;
@@ -9,6 +6,7 @@ import java.util.Date;
  * @author Robot
  *
  */
+
 public abstract class AbstractPersistable implements Persistable {
 
 	protected String id;
@@ -26,7 +24,7 @@ public abstract class AbstractPersistable implements Persistable {
 	 * @param id
 	 *            the id to set
 	 */
-	public void setId(String id) {
+	public void setId(final String id) {
 		this.id = id;
 	}
 
@@ -39,9 +37,9 @@ public abstract class AbstractPersistable implements Persistable {
 
 	/**
 	 * @param createdDate
-	 *            the createdDate to set
+	 *        the createdDate to set
 	 */
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(final Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -56,7 +54,7 @@ public abstract class AbstractPersistable implements Persistable {
 	 * @param modifiedDate
 	 *            the modifiedDate to set
 	 */
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(final Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
 

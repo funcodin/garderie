@@ -26,7 +26,8 @@
     </properties>
     <modules>
         <module>../garderie-types</module>
-	<module>../garderie-dao</module>
+		<module>../garderie-dao</module>
+		<module>../garderie-services</module>
     </modules>
     <dependencyManagement>
         <dependencies>
@@ -35,13 +36,11 @@
                 <artifactId>joda-time</artifactId>
                 <version>${jodatime.version}</version>
             </dependency>
-            
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
                 <version>${spring.boot.version}</version>
             </dependency>
-            
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-aop</artifactId>
@@ -52,7 +51,6 @@
                 <artifactId>spring-boot-starter-security</artifactId>
                 <version>${spring.boot.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-test</artifactId>
@@ -107,7 +105,6 @@
     			<artifactId>spring-security-jwt</artifactId>
     			<version>1.0.8.RELEASE</version>
 			</dependency>
-            
         </dependencies>
     </dependencyManagement>
     <build>

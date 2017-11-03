@@ -15,47 +15,46 @@ public class Child extends AbstractPersistable{
 	private List<EmergencyContact> emergencyContacts;
 	
 	public String getFirstName() {
-		return firstName;
+		return this.firstName;
 	}
-	public void setFirstName(String firstName) {
+	public void setFirstName(final String firstName) {
 		this.firstName = firstName;
 	}
 	public String getMiddleName() {
-		return middleName;
+		return this.middleName;
 	}
-	public void setMiddleName(String middleName) {
+	public void setMiddleName(final String middleName) {
 		this.middleName = middleName;
 	}
 	public String getLastName() {
-		return lastName;
+		return this.lastName;
 	}
-	public void setLastName(String lastName) {
+	public void setLastName(final String lastName) {
 		this.lastName = lastName;
 	}
 	public List<String> getParentIds() {
-		return parentIds;
+		return this.parentIds;
 	}
-	public void setParentIds(List<String> parentIds) {
+	public void setParentIds(final List<String> parentIds) {
 		this.parentIds = parentIds;
 	}
 	public String getOrgId() {
-		return orgId;
+		return this.orgId;
 	}
-	public void setOrgId(String orgId) {
+	public void setOrgId(final String orgId) {
 		this.orgId = orgId;
 	}
 	public List<String> getClassIds() {
-		return classIds;
+		return this.classIds;
 	}
-	public void setClassIds(List<String> classIds) {
+	public void setClassIds(final List<String> classIds) {
 		this.classIds = classIds;
 	}
 	public List<EmergencyContact> getEmergencyContacts() {
-		return emergencyContacts;
+		return this.emergencyContacts;
 	}
-	public void setEmergencyContacts(List<EmergencyContact> emergencyContacts) {
+	public void setEmergencyContacts(final List<EmergencyContact> emergencyContacts) {
 		this.emergencyContacts = emergencyContacts;
 	}
-	
 	
 }

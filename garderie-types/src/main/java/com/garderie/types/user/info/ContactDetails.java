@@ -8,24 +8,22 @@ public class ContactDetails{
 	private String homePhoneNumber;
 	private String workPhoneNumber;
 	public List<String> getCellPhoneNumber() {
-		return cellPhoneNumber;
+		return this.cellPhoneNumber;
 	}
-	public void setCellPhoneNumber(List<String> cellPhoneNumber) {
+	public void setCellPhoneNumber(final List<String> cellPhoneNumber) {
 		this.cellPhoneNumber = cellPhoneNumber;
 	}
 	public String getHomePhoneNumber() {
-		return homePhoneNumber;
+		return this.homePhoneNumber;
 	}
-	public void setHomePhoneNumber(String homePhoneNumber) {
+	public void setHomePhoneNumber(final String homePhoneNumber) {
 		this.homePhoneNumber = homePhoneNumber;
 	}
 	public String getWorkPhoneNumber() {
-		return workPhoneNumber;
+		return this.workPhoneNumber;
 	}
-	public void setWorkPhoneNumber(String workPhoneNumber) {
+	public void setWorkPhoneNumber(final String workPhoneNumber) {
 		this.workPhoneNumber = workPhoneNumber;
 	}
-	
-	
 	
 }

@@ -11,36 +11,43 @@ public class UserAuth extends AbstractPersistable {
 	private Boolean isActive;
 	private Boolean isPaymentDone;
 	private String userId;
+	private String emailId;
 	
 	public List<Authority> getAuthorities() {
-		return authorities;
+		return this.authorities;
 	}
-	public void setAuthorities(List<Authority> authorities) {
+	public void setAuthorities(final List<Authority> authorities) {
 		this.authorities = authorities;
 	}
 	public String getSaltPassword() {
-		return saltPassword;
+		return this.saltPassword;
 	}
-	public void setSaltPassword(String saltPassword) {
+	public void setSaltPassword(final String saltPassword) {
 		this.saltPassword = saltPassword;
 	}
 	public Boolean getIsActive() {
-		return isActive;
+		return this.isActive;
 	}
-	public void setIsActive(Boolean isActive) {
+	public void setIsActive(final Boolean isActive) {
 		this.isActive = isActive;
 	}
 	public Boolean getIsPaymentDone() {
-		return isPaymentDone;
+		return this.isPaymentDone;
 	}
-	public void setIsPaymentDone(Boolean isPaymentDone) {
+	public void setIsPaymentDone(final Boolean isPaymentDone) {
 		this.isPaymentDone = isPaymentDone;
 	}
 	public String getUserId() {
-		return userId;
+		return this.userId;
 	}
-	public void setUserId(String userId) {
+	public void setUserId(final String userId) {
 		this.userId = userId;
+	}
+	public String getEmailId() {
+		return this.emailId;
+	}
+	public void setEmailId(final String emailId) {
+		this.emailId = emailId;
 	}
 	
 	

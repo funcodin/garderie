@@ -10,21 +10,21 @@ public class Organization extends AbstractPersistable{
 	private String ownerId;
 	
 	public String getName() {
-		return name;
+		return this.name;
 	}
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 	public Address getAddress() {
-		return address;
+		return this.address;
 	}
-	public void setAddress(Address address) {
+	public void setAddress(final Address address) {
 		this.address = address;
 	}
 	public String getOwnerId() {
-		return ownerId;
+		return this.ownerId;
 	}
-	public void setOwnerId(String ownerId) {
+	public void setOwnerId(final String ownerId) {
 		this.ownerId = ownerId;
 	}
 	

@@ -17,7 +17,7 @@ public abstract class AbstractPersistable implements Persistable {
 	 * @return the id
 	 */
 	public String getId() {
-		return id;
+		return this.id;
 	}
 
 	/**
@@ -32,7 +32,7 @@ public abstract class AbstractPersistable implements Persistable {
 	 * @return the createdDate
 	 */
 	public Date getCreatedDate() {
-		return createdDate;
+		return this.createdDate;
 	}
 
 	/**
@@ -47,7 +47,7 @@ public abstract class AbstractPersistable implements Persistable {
 	 * @return the modifiedDate
 	 */
 	public Date getModifiedDate() {
-		return modifiedDate;
+		return this.modifiedDate;
 	}
 
 	/**

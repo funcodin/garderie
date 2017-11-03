@@ -2,47 +2,40 @@ package com.garderie.types.user.info;
 
 public class Address {
 
-	private String street;
-	private String unitNumber;
+	private String streetAddress;
 	private String unitType;
 	private String state;
 	private String zipCode;
 	private String country;
 	
-	public String getStreet() {
-		return street;
+	public String getStreetAddress() {
+		return this.streetAddress;
 	}
-	public void setStreet(String street) {
-		this.street = street;
-	}
-	public String getUnitNumber() {
-		return unitNumber;
-	}
-	public void setUnitNumber(String unitNumber) {
-		this.unitNumber = unitNumber;
+	public void setStreet(String streetAddress) {
+		this.streetAddress = streetAddress;
 	}
 	public String getUnitType() {
-		return unitType;
+		return this.unitType;
 	}
-	public void setUnitType(String unitType) {
+	public void setUnitType(final String unitType) {
 		this.unitType = unitType;
 	}
 	public String getState() {
-		return state;
+		return this.state;
 	}
-	public void setState(String state) {
+	public void setState(final String state) {
 		this.state = state;
 	}
 	public String getZipCode() {
-		return zipCode;
+		return this.zipCode;
 	}
-	public void setZipCode(String zipCode) {
+	public void setZipCode(final String zipCode) {
 		this.zipCode = zipCode;
 	}
 	public String getCountry() {
-		return country;
+		return this.country;
 	}
-	public void setCountry(String country) {
+	public void setCountry(final String country) {
 		this.country = country;
 	}
 	

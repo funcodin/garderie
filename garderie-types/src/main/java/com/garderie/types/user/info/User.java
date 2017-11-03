@@ -14,51 +14,51 @@ public class User extends AbstractPersistable{
 	private String secretCode;
 	
 	public String getEmailId() {
-		return emailId;
+		return this.emailId;
 	}
-	public void setEmailId(String emailId) {
+	public void setEmailId(final String emailId) {
 		this.emailId = emailId;
 	}
 	public String getFirstName() {
-		return firstName;
+		return this.firstName;
 	}
-	public void setFirstName(String firstName) {
+	public void setFirstName(final String firstName) {
 		this.firstName = firstName;
 	}
 	public String getMiddleName() {
-		return middleName;
+		return this.middleName;
 	}
-	public void setMiddleName(String middleName) {
+	public void setMiddleName(final String middleName) {
 		this.middleName = middleName;
 	}
 	public String getLastName() {
-		return lastName;
+		return this.lastName;
 	}
-	public void setLastName(String lastName) {
+	public void setLastName(final String lastName) {
 		this.lastName = lastName;
 	}
 	public Address getAddress() {
-		return address;
+		return this.address;
 	}
-	public void setAddress(Address address) {
+	public void setAddress(final Address address) {
 		this.address = address;
 	}
 	public ContactDetails getContactDetails() {
-		return contactDetails;
+		return this.contactDetails;
 	}
-	public void setContactDetails(ContactDetails contactDetails) {
+	public void setContactDetails(final ContactDetails contactDetails) {
 		this.contactDetails = contactDetails;
 	}
 	public UserType getUserType() {
-		return userType;
+		return this.userType;
 	}
-	public void setUserType(UserType userType) {
+	public void setUserType(final UserType userType) {
 		this.userType = userType;
 	}
 	public String getSecretCode() {
-		return secretCode;
+		return this.secretCode;
 	}
-	public void setSecretCode(String secretCode) {
+	public void setSecretCode(final String secretCode) {
 		this.secretCode = secretCode;
 	}
 	

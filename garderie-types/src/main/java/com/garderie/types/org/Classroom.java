@@ -13,33 +13,33 @@ public class Classroom extends AbstractPersistable{
 	private List<String> teacherIds;
 	
 	public String getOrgId() {
-		return orgId;
+		return this.orgId;
 	}
-	public void setOrgId(String orgId) {
+	public void setOrgId(final String orgId) {
 		this.orgId = orgId;
 	}
 	public String getName() {
-		return name;
+		return this.name;
 	}
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 	public Address getAddress() {
-		return address;
+		return this.address;
 	}
-	public void setAddress(Address address) {
+	public void setAddress(final Address address) {
 		this.address = address;
 	}
 	public List<String> getTeacherIds() {
-		return teacherIds;
+		return this.teacherIds;
 	}
-	public void setTeacherIds(List<String> teacherIds) {
+	public void setTeacherIds(final List<String> teacherIds) {
 		this.teacherIds = teacherIds;
 	}
 	

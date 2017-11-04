@@ -6,12 +6,12 @@ import com.garderie.types.AbstractPersistable;
 
 public class UserAuth extends AbstractPersistable {
 
+	private String emailId;
 	private List<Authority> authorities;
 	private String saltPassword;
 	private Boolean isActive;
 	private Boolean isPaymentDone;
 	private String userId;
-	private String emailId;
 	private String secretCode;
 	
 	public List<Authority> getAuthorities() {
@@ -51,9 +51,9 @@ public class UserAuth extends AbstractPersistable {
 		this.emailId = emailId;
 	}
 	public String getSecretCode() {
-		return secretCode;
+		return this.secretCode;
 	}
-	public void setSecretCode(String secretCode) {
+	public void setSecretCode(final String secretCode) {
 		this.secretCode = secretCode;
 	}
 

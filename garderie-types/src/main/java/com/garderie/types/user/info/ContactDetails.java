@@ -2,16 +2,19 @@ package com.garderie.types.user.info;
 
 import java.util.List;
 
-public class ContactDetails{
+import com.garderie.types.AbstractPersistable;
 
-	private List<String> cellPhoneNumber;
+public class ContactDetails extends AbstractPersistable{
+
+	private List<String> cellPhoneNumbers;
 	private String homePhoneNumber;
 	private String workPhoneNumber;
-	public List<String> getCellPhoneNumber() {
-		return this.cellPhoneNumber;
+	
+	public List<String> getCellPhoneNumbers() {
+		return this.cellPhoneNumbers;
 	}
-	public void setCellPhoneNumber(final List<String> cellPhoneNumber) {
-		this.cellPhoneNumber = cellPhoneNumber;
+	public void setCellPhoneNumbers(final List<String> cellPhoneNumbers) {
+		this.cellPhoneNumbers = cellPhoneNumbers;
 	}
 	public String getHomePhoneNumber() {
 		return this.homePhoneNumber;

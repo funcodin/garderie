@@ -1,26 +1,15 @@
 package com.garderie.types.user.info;
 
-import java.util.Date;
-
 import com.garderie.types.AbstractPersistable;
 
-public class User extends AbstractPersistable{
-
-	private String emailId;
+public class Doctor extends AbstractPersistable{
 	private String firstName;
 	private String middleName;
 	private String lastName;
 	private Address address;
 	private ContactDetails contactDetails;
-	private Date birthDate;
-	private Gender gender;
+	private DoctorType doctorType;
 	
-	public String getEmailId() {
-		return this.emailId;
-	}
-	public void setEmailId(final String emailId) {
-		this.emailId = emailId;
-	}
 	public String getFirstName() {
 		return this.firstName;
 	}
@@ -28,9 +17,9 @@ public class User extends AbstractPersistable{
 		this.firstName = firstName;
 	}
 	public String getMiddleName() {
-		return this.middleName;
+		return middleName;
 	}
-	public void setMiddleName(final String middleName) {
+	public void setMiddleName(String middleName) {
 		this.middleName = middleName;
 	}
 	public String getLastName() {
@@ -51,16 +40,11 @@ public class User extends AbstractPersistable{
 	public void setContactDetails(final ContactDetails contactDetails) {
 		this.contactDetails = contactDetails;
 	}
-	public Date getBirthDate() {
-		return birthDate;
+	public DoctorType getDoctorType() {
+		return this.doctorType;
 	}
-	public void setBirthDate(Date birthDate) {
-		this.birthDate = birthDate;
+	public void setDoctorType(final DoctorType doctorType) {
+		this.doctorType = doctorType;
 	}
-	public Gender getGender() {
-		return gender;
-	}
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
+	
 }

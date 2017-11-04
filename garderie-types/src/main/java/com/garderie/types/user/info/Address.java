@@ -1,9 +1,11 @@
 package com.garderie.types.user.info;
 
-public class Address {
+import com.garderie.types.AbstractPersistable;
+
+public class Address extends AbstractPersistable{
 
 	private String streetAddress;
-	private String unitType;
+	private String city;
 	private String state;
 	private String zipCode;
 	private String country;
@@ -11,14 +13,14 @@ public class Address {
 	public String getStreetAddress() {
 		return this.streetAddress;
 	}
-	public void setStreet(String streetAddress) {
+	public void setStreetAddress(String streetAddress) {
 		this.streetAddress = streetAddress;
 	}
-	public String getUnitType() {
-		return this.unitType;
+	public String getCity() {
+		return city;
 	}
-	public void setUnitType(final String unitType) {
-		this.unitType = unitType;
+	public void setCity(String city) {
+		this.city = city;
 	}
 	public String getState() {
 		return this.state;

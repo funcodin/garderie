@@ -12,6 +12,7 @@ public class UserAuth extends AbstractPersistable {
 	private Boolean isPaymentDone;
 	private String userId;
 	private String emailId;
+	private String secretCode;
 	
 	public List<Authority> getAuthorities() {
 		return this.authorities;
@@ -49,7 +50,11 @@ public class UserAuth extends AbstractPersistable {
 	public void setEmailId(final String emailId) {
 		this.emailId = emailId;
 	}
-	
-	
+	public String getSecretCode() {
+		return secretCode;
+	}
+	public void setSecretCode(String secretCode) {
+		this.secretCode = secretCode;
+	}
 
 }

@@ -1,4 +1,4 @@
-package com.garderie.commons;
+package com.garderie.types.user;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

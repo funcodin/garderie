@@ -13,6 +13,8 @@ public class Child extends AbstractPersistable{
 	private String orgId;
 	private List<String> classIds;
 	private List<EmergencyContact> emergencyContacts;
+	private MedicalInformation medicalInformation;
+	private List<Parent> parents;
 	
 	public String getFirstName() {
 		return this.firstName;
@@ -56,5 +58,19 @@ public class Child extends AbstractPersistable{
 	public void setEmergencyContacts(final List<EmergencyContact> emergencyContacts) {
 		this.emergencyContacts = emergencyContacts;
 	}
+	public MedicalInformation getMedicalInformation() {
+		return this.medicalInformation;
+	}
+	public void setMedicalInformation(final MedicalInformation medicalInformation) {
+		this.medicalInformation = medicalInformation;
+	}
+	public List<Parent> getParents() {
+		return this.parents;
+	}
+	public void setParents(final List<Parent> parents) {
+		this.parents = parents;
+	}
+	
+	
 	
 }

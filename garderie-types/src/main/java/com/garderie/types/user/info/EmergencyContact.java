@@ -1,12 +1,16 @@
 package com.garderie.types.user.info;
 
-public class EmergencyContact {
+import com.garderie.types.AbstractPersistable;
+
+public class EmergencyContact extends AbstractPersistable{
 
 	private String cellPhone;
 	private String workPhone;
 	private String homePhone;
 	private String firstName;
+	private String middleName;
 	private String lastName;
+	private Relation relationshipToChild;
 	
 	public String getCellPhone() {
 		return this.cellPhone;
@@ -32,11 +36,24 @@ public class EmergencyContact {
 	public void setFirstName(final String firstName) {
 		this.firstName = firstName;
 	}
+	
+	public String getMiddleName() {
+		return middleName;
+	}
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
 	public String getLastName() {
 		return this.lastName;
 	}
 	public void setLastName(final String lastName) {
 		this.lastName = lastName;
+	}
+	public Relation getRelationshipToChild() {
+		return relationshipToChild;
+	}
+	public void setRelationshipToChild(Relation relationshipToChild) {
+		this.relationshipToChild = relationshipToChild;
 	}
 	
 }

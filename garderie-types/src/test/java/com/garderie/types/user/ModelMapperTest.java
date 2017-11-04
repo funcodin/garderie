@@ -8,9 +8,9 @@ import com.garderie.types.base.BaseObjectMapperTest;
 import com.garderie.types.user.info.Child;
 import com.garderie.types.user.info.Parent;
 
-public class ParentMapperTest extends BaseObjectMapperTest{
+public class ModelMapperTest extends BaseObjectMapperTest{
 
-	private static final Logger log = LoggerFactory.getLogger(ParentMapperTest.class);
+	private static final Logger log = LoggerFactory.getLogger(ModelMapperTest.class);
 	
 	@Test
 	public void testParentReadAndWrite() throws Exception{

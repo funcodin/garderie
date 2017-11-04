@@ -16,7 +16,6 @@ import com.garderie.types.user.info.Gender;
 import com.garderie.types.user.info.MedicalInformation;
 import com.garderie.types.user.info.Parent;
 import com.garderie.types.user.info.Relation;
-import com.garderie.types.user.info.User;
 import com.garderie.types.user.info.UserType;
 
 public class BaseInfoTest {
@@ -110,6 +109,12 @@ public class BaseInfoTest {
 		foodAllergies.add("pizza");
 		foodAllergies.add("tacos");
 		medicalInformation.setFoodAllergies(foodAllergies);
+		
+		final List<String> medicalProblems = new ArrayList<>();
+		medicalProblems.add("Sleepy head");
+		medicalProblems.add("Bhasmya");
+		medicalInformation.setMedicalProblems(medicalProblems);
+		
 		
 		final List<Doctor> doctors = new ArrayList<>();
 		doctors.add(this.createDoctor());

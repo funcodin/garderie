@@ -15,7 +15,7 @@ public class LoginController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> sayHello() {
-        return new ResponseEntity<>("Secured hello!", HttpStatus.OK);
+        return new ResponseEntity<>("unsecured hello!", HttpStatus.OK);
     }
 
 }

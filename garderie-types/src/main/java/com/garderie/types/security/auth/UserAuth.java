@@ -3,8 +3,9 @@ package com.garderie.types.security.auth;
 import java.util.List;
 
 import com.garderie.types.AbstractPersistable;
+import org.springframework.security.core.userdetails.UserDetails;
 
-public class UserAuth extends AbstractPersistable {
+public class UserAuth extends AbstractPersistable implements UserDetails{
 
 	private String emailId;
 	private List<Authority> authorities;
@@ -13,11 +14,45 @@ public class UserAuth extends AbstractPersistable {
 	private Boolean isPaymentDone;
 	private String userId;
 	private String secretCode;
+	private Boolean accountNonExpired;
+	private Boolean accountNonLocked;
+	private Boolean credentialsNonExpired;
 	
 	public List<Authority> getAuthorities() {
 		return this.authorities;
 	}
-	public void setAuthorities(final List<Authority> authorities) {
+
+    @Override
+    public String getPassword() {
+        return this.saltPassword;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.emailId;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return this.accountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return this.accountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return this.credentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.isActive;
+    }
+
+    public void setAuthorities(final List<Authority> authorities) {
 		this.authorities = authorities;
 	}
 	public String getSaltPassword() {
@@ -25,12 +60,6 @@ public class UserAuth extends AbstractPersistable {
 	}
 	public void setSaltPassword(final String saltPassword) {
 		this.saltPassword = saltPassword;
-	}
-	public Boolean getIsActive() {
-		return this.isActive;
-	}
-	public void setIsActive(final Boolean isActive) {
-		this.isActive = isActive;
 	}
 	public Boolean getIsPaymentDone() {
 		return this.isPaymentDone;
@@ -56,5 +85,10 @@ public class UserAuth extends AbstractPersistable {
 	public void setSecretCode(final String secretCode) {
 		this.secretCode = secretCode;
 	}
-
+    public Boolean getActive() {
+        return isActive;
+    }
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
 }

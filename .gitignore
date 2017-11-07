@@ -7,12 +7,13 @@
 /.classpath
 /.settings
 /.project
-
+.idea/
 # Log file
 *.log
 
 # BlueJ files
 *.ctxt
+*.iml
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

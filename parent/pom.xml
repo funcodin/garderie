@@ -29,7 +29,7 @@
    <modules>
       <module>../garderie-types</module>
       <module>../garderie-dao</module>
-      <module>../garderie-services</module>
+      <module>../garderie-service</module>
    </modules>
    <dependencyManagement>
       <dependencies>

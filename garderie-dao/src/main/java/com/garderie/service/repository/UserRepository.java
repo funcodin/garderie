@@ -1,4 +1,4 @@
-package com.garderie.service;
+package com.garderie.service.repository;
 
 import com.garderie.types.security.auth.UserAuth;
 import org.springframework.data.mongodb.repository.MongoRepository;

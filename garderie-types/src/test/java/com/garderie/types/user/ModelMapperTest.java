@@ -1,12 +1,14 @@
 package com.garderie.types.user;
 
+import com.garderie.types.org.Classroom;
+import com.garderie.types.org.Organization;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.garderie.types.base.BaseObjectMapperTest;
-import com.garderie.types.user.info.Child;
-import com.garderie.types.user.info.Parent;
+import com.garderie.types.user.types.Child;
+import com.garderie.types.user.types.Parent;
 
 public class ModelMapperTest extends BaseObjectMapperTest{
 
@@ -24,6 +26,17 @@ public class ModelMapperTest extends BaseObjectMapperTest{
 		final Child child = this.baseInfoTest.createChild();
 		log.info(this.objectMapper.writeValueAsString(child));
 	}
-	
+
+	@Test
+	public void testOrganisationReadAndWrtie() throws Exception {
+		final Organization organization = this.baseInfoTest.createOrganization();
+		log.info(this.objectMapper.writeValueAsString(organization));
+	}
+
+	@Test
+	public void testClassroomReadAndWrite() throws Exception {
+		final Classroom classroom = this.baseInfoTest.createClassroom();
+		log.info(this.objectMapper.writeValueAsString(classroom));
+	}
 	
 }

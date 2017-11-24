@@ -4,12 +4,12 @@ import com.garderie.types.AbstractPersistable;
 
 public class EmergencyContact extends AbstractPersistable{
 
-	private String cellPhone;
-	private String workPhone;
-	private String homePhone;
 	private String firstName;
 	private String middleName;
 	private String lastName;
+	private String cellPhone;
+	private String workPhone;
+	private String homePhone;
 	private Relation relationshipToChild;
 	
 	public String getCellPhone() {

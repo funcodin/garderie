@@ -1,8 +1,12 @@
-package com.garderie.types.user.info;
+package com.garderie.types.user.types;
+
+import com.garderie.types.user.info.Relation;
+import com.garderie.types.user.info.User;
+import com.garderie.types.user.info.UserType;
 
 import java.util.List;
 
-public class Parent extends User{
+public class Parent extends User {
 
 	private UserType userType;
 	private Relation relationshipToChild;

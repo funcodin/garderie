@@ -1,5 +1,6 @@
 package com.garderie.types.user;
 
+import com.garderie.types.activites.Activity;
 import com.garderie.types.org.Classroom;
 import com.garderie.types.org.Organization;
 import org.junit.Test;
@@ -37,6 +38,12 @@ public class ModelMapperTest extends BaseObjectMapperTest{
 	public void testClassroomReadAndWrite() throws Exception {
 		final Classroom classroom = this.baseInfoTest.createClassroom();
 		log.info(this.objectMapper.writeValueAsString(classroom));
+	}
+
+	@Test
+	public void testActivityReadAndWrite() throws Exception {
+		final Activity activity = this.baseInfoTest.createActivity();
+		log.info(this.objectMapper.writeValueAsString(activity));
 	}
 	
 }

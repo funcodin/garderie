@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import com.garderie.types.activites.Activity;
+import com.garderie.types.activites.ActivityType;
 import com.garderie.types.org.Classroom;
 import com.garderie.types.org.Organization;
 import com.garderie.types.user.info.Address;
@@ -168,6 +170,20 @@ public class BaseInfoTest {
 		classroom.setCreatedDate(new Date());
 		classroom.setModifiedDate(new Date());
 		return classroom;
+	}
+
+	public Activity createActivity(){
+		final Activity activity = new Activity();
+		activity.setActivityCreatedById(UUID.randomUUID().toString());
+		activity.setActivityType(ActivityType.AFTERNOON_NAP);
+		activity.setCaption("Happy napping");
+		activity.setChildId(UUID.randomUUID().toString());
+		activity.setClassId(UUID.randomUUID().toString());
+		activity.setPublic(false);
+		activity.setCreatedDate(new Date());
+		activity.setModifiedDate(new Date());
+		activity.setId(UUID.randomUUID().toString());
+		return activity;
 	}
 
 }

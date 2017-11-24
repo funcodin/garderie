@@ -9,9 +9,7 @@ public class Classroom extends AbstractPersistable{
 	private String orgId;
 	private String name;
 	private String description;
-	private Address address;
-	private List<String> teacherIds;
-	
+
 	public String getOrgId() {
 		return this.orgId;
 	}
@@ -30,17 +28,5 @@ public class Classroom extends AbstractPersistable{
 	public void setDescription(final String description) {
 		this.description = description;
 	}
-	public Address getAddress() {
-		return this.address;
-	}
-	public void setAddress(final Address address) {
-		this.address = address;
-	}
-	public List<String> getTeacherIds() {
-		return this.teacherIds;
-	}
-	public void setTeacherIds(final List<String> teacherIds) {
-		this.teacherIds = teacherIds;
-	}
-	
+
 }

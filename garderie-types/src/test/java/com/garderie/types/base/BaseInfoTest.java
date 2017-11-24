@@ -5,16 +5,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import com.garderie.types.org.Classroom;
+import com.garderie.types.org.Organization;
 import com.garderie.types.user.info.Address;
 import com.garderie.types.user.info.BloodGroup;
-import com.garderie.types.user.info.Child;
+import com.garderie.types.user.types.Child;
 import com.garderie.types.user.info.ContactDetails;
 import com.garderie.types.user.info.Doctor;
 import com.garderie.types.user.info.DoctorType;
 import com.garderie.types.user.info.EmergencyContact;
 import com.garderie.types.user.info.Gender;
 import com.garderie.types.user.info.MedicalInformation;
-import com.garderie.types.user.info.Parent;
+import com.garderie.types.user.types.Parent;
 import com.garderie.types.user.info.Relation;
 import com.garderie.types.user.info.UserType;
 
@@ -145,4 +147,27 @@ public class BaseInfoTest {
 		return child;
 		
 	}
+
+	public Organization createOrganization(){
+		final Organization organization = new Organization();
+		organization.setAddress(this.createAddress());
+		organization.setName("Garderie Institute");
+		organization.setId(UUID.randomUUID().toString());
+		organization.setOwnerId(UUID.randomUUID().toString());
+		organization.setCreatedDate(new Date());
+		organization.setModifiedDate(new Date());
+		return  organization;
+	}
+
+	public Classroom createClassroom(){
+		final Classroom classroom = new Classroom();
+		classroom.setDescription("Class room for ages between 5-10");
+		classroom.setName("Class room 1");
+		classroom.setOrgId(UUID.randomUUID().toString());
+		classroom.setId(UUID.randomUUID().toString());
+		classroom.setCreatedDate(new Date());
+		classroom.setModifiedDate(new Date());
+		return classroom;
+	}
+
 }

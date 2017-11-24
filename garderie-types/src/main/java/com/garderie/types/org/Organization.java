@@ -27,7 +27,5 @@ public class Organization extends AbstractPersistable{
 	public void setOwnerId(final String ownerId) {
 		this.ownerId = ownerId;
 	}
-	
-	
-	
+
 }

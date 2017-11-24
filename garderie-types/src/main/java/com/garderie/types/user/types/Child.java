@@ -1,8 +1,11 @@
-package com.garderie.types.user.info;
+package com.garderie.types.user.types;
 
 import java.util.List;
 
 import com.garderie.types.AbstractPersistable;
+import com.garderie.types.user.info.EmergencyContact;
+import com.garderie.types.user.info.MedicalInformation;
+import com.garderie.types.user.types.Parent;
 
 public class Child extends AbstractPersistable{
 
@@ -11,7 +14,7 @@ public class Child extends AbstractPersistable{
 	private String lastName;
 	private List<String> parentIds;
 	private String orgId;
-	private List<String> classIds;
+	private List<String> classroomIds;
 	private List<EmergencyContact> emergencyContacts;
 	private MedicalInformation medicalInformation;
 	private List<Parent> parents;
@@ -46,11 +49,11 @@ public class Child extends AbstractPersistable{
 	public void setOrgId(final String orgId) {
 		this.orgId = orgId;
 	}
-	public List<String> getClassIds() {
-		return this.classIds;
+	public List<String> getClassroomIds() {
+		return this.classroomIds;
 	}
-	public void setClassIds(final List<String> classIds) {
-		this.classIds = classIds;
+	public void setClassroomIds(final List<String> classroomIds) {
+		this.classroomIds = classroomIds;
 	}
 	public List<EmergencyContact> getEmergencyContacts() {
 		return this.emergencyContacts;

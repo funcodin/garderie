@@ -73,7 +73,4 @@ public class Child extends AbstractPersistable{
 	public void setParents(final List<Parent> parents) {
 		this.parents = parents;
 	}
-	
-	
-	
 }

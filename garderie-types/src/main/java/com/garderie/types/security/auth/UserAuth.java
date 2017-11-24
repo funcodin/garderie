@@ -3,10 +3,12 @@ package com.garderie.types.security.auth;
 import java.util.List;
 
 import com.garderie.types.AbstractPersistable;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class UserAuth extends AbstractPersistable implements UserDetails{
 
+    @Indexed(unique = true)
 	private String emailId;
 	private List<Authority> authorities;
 	private String saltPassword;

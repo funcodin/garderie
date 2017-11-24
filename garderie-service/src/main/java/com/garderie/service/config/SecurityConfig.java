@@ -41,8 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        super.configure(auth);
+    protected void configure(final AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        super.configure(authenticationManagerBuilder);
     }
 
     @Override

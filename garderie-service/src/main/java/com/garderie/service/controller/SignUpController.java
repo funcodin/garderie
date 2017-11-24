@@ -28,7 +28,9 @@ public class SignUpController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> signUp(@RequestBody final UserDTO dto) {
-        return new ResponseEntity<>(service.create(converterFacade.convert(dto)), HttpStatus.OK);
+    public UserDTO signUp(@RequestBody final UserDTO dto) {
+        service.create(converterFacade.convert(dto));
+         dto.setPassword("entry created");
+         return dto;
     }
 }

@@ -10,7 +10,9 @@ public class UserDTOConverter implements Converter<UserDTO, UserAuth> {
     @Override
     public UserAuth convert(final UserDTO dto) {
         final UserAuth user = new UserAuth();
-
+        user.setUserId(dto.getUsername());
+        user.setSaltPassword(dto.getPassword());
+        user.setEmailId(dto.getUsername());
        return user;
     }
 }

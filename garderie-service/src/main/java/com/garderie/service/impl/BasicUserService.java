@@ -3,6 +3,7 @@ package com.garderie.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import com.garderie.service.interfaces.UserService;
 import com.garderie.service.repository.UserRepository;
 import com.garderie.types.security.auth.UserAuth;
 import org.springframework.beans.factory.annotation.Autowired;

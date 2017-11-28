@@ -1,5 +1,6 @@
 package com.garderie.service.impl;
 
+import com.garderie.service.interfaces.UserService;
 import com.garderie.types.security.auth.UserAuth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,6 +1,6 @@
 package com.garderie.service.controller;
 
-import com.garderie.service.impl.ChildService;
+import com.garderie.service.interfaces.ChildService;
 import com.garderie.types.user.types.Child;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;

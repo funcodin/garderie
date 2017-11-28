@@ -1,4 +1,4 @@
-package com.garderie.service.impl;
+package com.garderie.service.interfaces;
 
 import com.garderie.types.security.auth.UserAuth;
 

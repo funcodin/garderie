@@ -27,7 +27,7 @@ public class ChildServiceImpl implements ChildService {
         child.setId(UUID.randomUUID().toString());
         child.setCreatedDate(new Date());
         child.setModifiedDate(new Date());
-        List<Parent> parents = child.getParents().stream().forEach(parent -> this.parentService.create(parent));
+        child.getParents().stream().forEach(parent -> this.parentService.create(parent));
         return childRepository.save(child);
     }
 }

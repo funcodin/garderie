@@ -10,7 +10,15 @@ public class GarderieResponse<T> {
     private List<T> data;
     private boolean hasErrors;
     private List<String> errors;
+    private String nextStep;
 
+    public String getNextStep() {
+        return nextStep;
+    }
+
+    public void setNextStep(String nextStep) {
+        this.nextStep = nextStep;
+    }
 
     public void addData(T t) {
         if (CollectionUtils.isEmpty(this.data)) {

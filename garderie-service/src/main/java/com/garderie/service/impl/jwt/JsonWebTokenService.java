@@ -43,6 +43,13 @@ public class JsonWebTokenService implements TokenService {
 
     }
 
+    @Override
+    public List<ActionPermissions> getActionPermissionFromJwtToken(String jwtToken) {
+        final Jws<Claims> jwsClaims = this.parseToken(jwtToken);
+        JwtTokenData jwtTokenData = this.getUserRequestAuthenticationFromToken(jwsClaims);
+        return jwtTokenData.getActionPermissions();
+    }
+
     public Jws<Claims> parseToken(final String token) {
         if (token != null) {
             try {

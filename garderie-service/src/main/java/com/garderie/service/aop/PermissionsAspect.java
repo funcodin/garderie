@@ -37,15 +37,23 @@ public class PermissionsAspect {
         final MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
         final Method method = methodSignature.getMethod();
         final PermissionsCheck securityCheck = method.getAnnotation(PermissionsCheck.class);
-        final List<ActionPermissions>actionPermissions = Arrays.asList(securityCheck.hasPermissions());
+        final List<ActionPermissions> actionPermissions = Arrays.asList(securityCheck.hasPermissions());
         final HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         final String token = httpServletRequest.getHeader(SecurityConstants.AUTH_HEADER_NAME);
 
 
         LOGGER.info("Expected perms {}", actionPermissions);
 
+        List<ActionPermissions> actionPermissionsFromToken = this.tokenService.getActionPermissionFromJwtToken(token);
+            boolean authPassed = false;
+        for(ActionPermissions actionPermission : actionPermissions ){
+            if(actionPermissionsFromToken.contains(actionPermission.name())){
+               authPassed = true;
+               break;
+            }
+        }
 
-        if(token.equalsIgnoreCase("Rohit")){
+        if(authPassed){
             LOGGER.info("Auth passed");
         }else{
             throw new ServiceException("UnAuthorized", HttpStatus.FORBIDDEN);

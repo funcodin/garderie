@@ -7,24 +7,22 @@ import java.util.UUID;
 
 import com.garderie.types.activites.Activity;
 import com.garderie.types.activites.ActivityType;
-import com.garderie.types.org.Classroom;
-import com.garderie.types.org.Organization;
-import com.garderie.types.user.info.Address;
-import com.garderie.types.user.info.BloodGroup;
+import com.garderie.types.org.*;
+import com.garderie.types.user.info.*;
 import com.garderie.types.user.types.Child;
-import com.garderie.types.user.info.ContactDetails;
-import com.garderie.types.user.info.Doctor;
-import com.garderie.types.user.info.DoctorType;
-import com.garderie.types.user.info.EmergencyContact;
-import com.garderie.types.user.info.Gender;
-import com.garderie.types.user.info.MedicalInformation;
 import com.garderie.types.user.types.Parent;
-import com.garderie.types.user.info.Relation;
-import com.garderie.types.user.info.UserType;
 
 public class BaseInfoTest {
 
-	
+	public OrganisationAddress createOrgAddress(){
+		OrganisationAddress address = new OrganisationAddress();
+		address.setStreetAddress("3146 Oak Raod Apt 212");
+		address.setCity("Walnut Creek");
+		address.setState("CA");
+		address.setCountry("USA");
+		address.setZipCode("91497");
+		return address;
+	}
 	
 	public Address createAddress(){
 		Address address = new Address();
@@ -41,9 +39,25 @@ public class BaseInfoTest {
 	
 	public ContactDetails createContactDetails(){
 		final ContactDetails contactDetails = new ContactDetails();
-		contactDetails.setId(UUID.randomUUID().toString());
-		contactDetails.setCreatedDate(new Date());
-		contactDetails.setModifiedDate(new Date());
+		List<String> cellPhoneNumbers = new ArrayList<>();
+		cellPhoneNumbers.add("201-565-6543");
+		cellPhoneNumbers.add("123-456-7654");
+		contactDetails.setCellPhoneNumbers(cellPhoneNumbers);
+		contactDetails.setHomePhoneNumber("232300");
+		return contactDetails;
+	}
+
+	public OrgOwner createOrgOwner() {
+		final OrgOwner orgOwner = new OrgOwner();
+		orgOwner.setContactDetails(this.createOrgOwnerContactDetails());
+		orgOwner.setFirstName("Rohit");
+		orgOwner.setMiddleName("Vijay");
+		orgOwner.setLastName("Dhumal");
+		return orgOwner;
+	}
+
+	public OrgOwnerContactDetails createOrgOwnerContactDetails() {
+		OrgOwnerContactDetails contactDetails = new OrgOwnerContactDetails();
 		List<String> cellPhoneNumbers = new ArrayList<>();
 		cellPhoneNumbers.add("201-565-6543");
 		cellPhoneNumbers.add("123-456-7654");
@@ -150,10 +164,11 @@ public class BaseInfoTest {
 		
 	}
 
-	public Organization createOrganization(){
-		final Organization organization = new Organization();
-		organization.setAddress(this.createAddress());
+	public Organisation createOrganization(){
+		final Organisation organization = new Organisation();
+		organization.setOrganisationAddress(this.createOrgAddress());
 		organization.setOrgName("Garderie Institute");
+		organization.setOrgOwner(this.createOrgOwner());
 		organization.setId(UUID.randomUUID().toString());
 		organization.setCreatedDate(new Date());
 		organization.setModifiedDate(new Date());

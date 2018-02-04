@@ -6,9 +6,9 @@ import com.garderie.service.interfaces.*;
 import com.garderie.types.dto.SignUpDTO;
 import com.garderie.types.security.auth.UserAccountDetails;
 import com.garderie.types.security.auth.UserAuthentication;
-import com.garderie.types.security.auth.permissions.UserPermissions;
 import com.garderie.types.security.auth.UserSalt;
 import com.garderie.types.security.auth.permissions.ActionPermissions;
+import com.garderie.types.security.auth.permissions.UserPermissions;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -89,8 +89,8 @@ public class SignUpServiceImpl implements SignUpService {
             //TODO throw error
         }
 
-        final UserAccountDetails parentUserAccountDetails = new UserAccountDetails();
-        parentUserAccountDetails.setEmailId(signUpDTO.getEmailId());
+        final UserAccountDetails teacherAccountDetails = new UserAccountDetails();
+        teacherAccountDetails.setEmailId(signUpDTO.getEmailId());
         this.userAccountDetailsService.createTeacherWithCode(userAccountDetails);
 
     }

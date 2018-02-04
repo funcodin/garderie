@@ -76,36 +76,4 @@ public class SignUpController {
         response.addData(tokenDTO);
         return response;
     }
-
-
-    /*
-    Not sure if I need
-    signUpParent
-    signUpTeacher
-    since this will be taken care by signup by code.
-     */
-
-    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_PARENT,ActionPermissions.ADD_ACTIVITY})
-    @RequestMapping(method = RequestMethod.POST, value = "/parent")
-    public void signUpParent(@RequestBody final SignUpDTO signUpDTO) {
-
-        if (StringUtils.isBlank(signUpDTO.getEmailId())) {
-            //TODO throw error GarderieErrors.MISSING_EMAIL
-        }
-
-        this.signUpService.signUpParent(signUpDTO);
-
-    }
-
-    @RequestMapping(method = RequestMethod.POST, value = "/teacher")
-    public void signUpTeacher(@RequestBody final SignUpDTO signUpDTO) {
-
-        if (StringUtils.isBlank(signUpDTO.getEmailId())) {
-            //TODO throw error GarderieErrors.MISSING_EMAIL
-        }
-
-        this.signUpService.signUpTeacher(signUpDTO);
-
-    }
-
 }

@@ -1,19 +1,16 @@
 package com.garderie.service.controller.signup;
 
-import com.garderie.service.aop.PermissionsCheck;
 import com.garderie.service.dto.TokenDTO;
 import com.garderie.service.errors.GarderieErrors;
 import com.garderie.service.exception.model.ServiceException;
-import com.garderie.service.interfaces.TokenService;
 import com.garderie.service.interfaces.SignUpService;
+import com.garderie.service.interfaces.TokenService;
 import com.garderie.service.validator.dto.SignUpDTOValidator;
 import com.garderie.service.validator.dto.SignupWithCodeValidator;
 import com.garderie.types.GarderieResponse;
 import com.garderie.types.dto.SignUpDTO;
 import com.garderie.types.security.auth.UserAuthentication;
-import com.garderie.types.security.auth.permissions.ActionPermissions;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;

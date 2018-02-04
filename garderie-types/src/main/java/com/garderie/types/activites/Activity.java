@@ -11,6 +11,7 @@ public class Activity extends AbstractPersistable {
     private boolean isPublic;
     private String photoUrl;
     private String activityCreatedById;
+    private String videoUrl;
 
     public ActivityType getActivityType() {
         return activityType;
@@ -66,5 +67,13 @@ public class Activity extends AbstractPersistable {
 
     public void setActivityCreatedById(final String activityCreatedById) {
         this.activityCreatedById = activityCreatedById;
+    }
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
     }
 }

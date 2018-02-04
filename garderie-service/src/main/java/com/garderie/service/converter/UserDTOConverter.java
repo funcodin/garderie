@@ -1,18 +1,17 @@
 package com.garderie.service.converter;
 
-import com.garderie.types.security.auth.UserAuth;
+import com.garderie.types.security.auth.UserAccountDetails;
 import org.springframework.core.convert.converter.Converter;
 import com.garderie.service.dto.UserDTO;
 
 
-public class UserDTOConverter implements Converter<UserDTO, UserAuth> {
+public class UserDTOConverter implements Converter<UserDTO, UserAccountDetails> {
 
     @Override
-    public UserAuth convert(final UserDTO dto) {
-        final UserAuth user = new UserAuth();
-        user.setUserId(dto.getUsername());
-        user.setSaltPassword(dto.getPassword());
-        user.setEmailId(dto.getUsername());
+    public UserAccountDetails convert(final UserDTO dto) {
+        final UserAccountDetails user = new UserAccountDetails();
+        user.setEmailId(dto.getEmailId());
+        user.setEncryptedPassword(dto.getPassword());
        return user;
     }
 }

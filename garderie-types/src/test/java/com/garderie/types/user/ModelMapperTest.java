@@ -1,6 +1,7 @@
 package com.garderie.types.user;
 
 import com.garderie.types.activites.Activity;
+import com.garderie.types.dto.SignUpDTO;
 import com.garderie.types.org.Classroom;
 import com.garderie.types.org.Organization;
 import org.junit.Test;
@@ -44,6 +45,16 @@ public class ModelMapperTest extends BaseObjectMapperTest{
 	public void testActivityReadAndWrite() throws Exception {
 		final Activity activity = this.baseInfoTest.createActivity();
 		log.info(this.objectMapper.writeValueAsString(activity));
+	}
+
+	@Test
+	public void testSignupDTO() throws Exception {
+		final SignUpDTO signUpDTO = new SignUpDTO();
+		signUpDTO.setEmailId("rvd@gmail.com");
+		signUpDTO.setPassword("password");
+		signUpDTO.setConfirmPassword("password");
+		log.info(this.objectMapper.writeValueAsString(signUpDTO));
+
 	}
 	
 }

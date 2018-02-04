@@ -153,9 +153,8 @@ public class BaseInfoTest {
 	public Organization createOrganization(){
 		final Organization organization = new Organization();
 		organization.setAddress(this.createAddress());
-		organization.setName("Garderie Institute");
+		organization.setOrgName("Garderie Institute");
 		organization.setId(UUID.randomUUID().toString());
-		organization.setOwnerId(UUID.randomUUID().toString());
 		organization.setCreatedDate(new Date());
 		organization.setModifiedDate(new Date());
 		return  organization;

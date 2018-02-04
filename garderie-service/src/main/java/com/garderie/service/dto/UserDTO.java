@@ -6,18 +6,18 @@ public class UserDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String username;
+    private String emailId;
     private String password;
 
     public UserDTO() {
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmailId() {
+        return emailId;
     }
 
-    public void setUsername(final String username) {
-        this.username = username;
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
     }
 
     public String getPassword() {

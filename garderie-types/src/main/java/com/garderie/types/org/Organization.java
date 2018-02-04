@@ -5,27 +5,30 @@ import com.garderie.types.user.info.Address;
 
 public class Organization extends AbstractPersistable{
 
-	private String name;
+	private String orgName;
+	private OrgOwner orgOwner;
 	private Address address;
-	private String ownerId;
-	
-	public String getName() {
-		return this.name;
-	}
-	public void setName(final String name) {
-		this.name = name;
-	}
+
 	public Address getAddress() {
 		return this.address;
 	}
 	public void setAddress(final Address address) {
 		this.address = address;
 	}
-	public String getOwnerId() {
-		return this.ownerId;
-	}
-	public void setOwnerId(final String ownerId) {
-		this.ownerId = ownerId;
+
+	public String getOrgName() {
+		return this.orgName;
 	}
 
+	public void setOrgName(final String orgName) {
+		this.orgName = orgName;
+	}
+
+	public OrgOwner getOrgOwner() {
+		return this.orgOwner;
+	}
+
+	public void setOrgOwner(final OrgOwner orgOwner) {
+		this.orgOwner = orgOwner;
+	}
 }

@@ -12,7 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 
-import com.garderie.service.impl.TokenAuthenticationService;
+import com.garderie.service.interfaces.TokenAuthenticationService;
 
 
 public class AuthenticationTokenFilter extends GenericFilterBean {

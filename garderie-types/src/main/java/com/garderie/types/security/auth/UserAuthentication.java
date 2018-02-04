@@ -1,58 +1,35 @@
 package com.garderie.types.security.auth;
 
-import com.garderie.types.security.auth.UserAuth;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
+import com.garderie.types.security.auth.permissions.UserPermissions;
 
-import java.util.Collection;
+public class UserAuthentication {
 
-public class UserAuthentication implements Authentication {
+    private UserAccountDetails userAccountDetails;
+    private UserSalt userSalt;
+    private UserPermissions userPermissions;
 
-    private static final long serialVersionUID = -7170337143687707450L;
 
-    private final UserAuth user;
-    private boolean authenticated = true;
-
-    public UserAuthentication(final UserAuth user) {
-        this.user = user;
+    public UserAccountDetails getUserAccountDetails() {
+        return this.userAccountDetails;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return user.getAuthorities();
+    public void setUserAccountDetails(final UserAccountDetails userAccountDetails) {
+        this.userAccountDetails = userAccountDetails;
     }
 
-    @Override
-    public Object getCredentials() {
-        return user.getPassword();
+    public UserSalt getUserSalt() {
+        return this.userSalt;
     }
 
-    @Override
-    public Object getDetails() {
-        return user;
+    public void setUserSalt(final UserSalt userSalt) {
+        this.userSalt = userSalt;
     }
 
-    @Override
-    public Object getPrincipal() {
-        return user.getUsername();
+    public UserPermissions getUserPermissions() {
+        return this.userPermissions;
     }
 
-    @Override
-    public boolean isAuthenticated() {
-        return authenticated;
-    }
-
-    @Override
-    public void setAuthenticated(final boolean authenticated) throws IllegalArgumentException {
-        this.authenticated = authenticated;
-    }
-
-    @Override
-    public String getName() {
-        return user.getUsername();
-    }
-
-    public UserAuth getUser() {
-        return user;
+    public void setUserPermissions(final UserPermissions userPermissions) {
+        this.userPermissions = userPermissions;
     }
 }

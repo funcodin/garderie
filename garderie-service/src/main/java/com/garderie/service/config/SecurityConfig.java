@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.garderie.service.filter.AuthenticationTokenFilter;
-import com.garderie.service.impl.TokenAuthenticationService;
+import com.garderie.service.interfaces.TokenAuthenticationService;
 
 
 @EnableWebSecurity
@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/api/auth").permitAll()
-                .antMatchers("/api/signup").permitAll()
+                .antMatchers("/api/signup/*").permitAll()
                 .antMatchers("/api/log").permitAll()
                 .anyRequest().authenticated()
                 .and()

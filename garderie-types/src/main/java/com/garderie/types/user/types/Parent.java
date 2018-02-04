@@ -27,5 +27,12 @@ public class Parent extends User {
 	public void setRelationshipToChild(final Relation relationshipToChild) {
 		this.relationshipToChild = relationshipToChild;
 	}
-	
+
+	public List<String> getChildrenIds() {
+		return this.childrenIds;
+	}
+
+	public void setChildrenIds(final List<String> childrenIds) {
+		this.childrenIds = childrenIds;
+	}
 }

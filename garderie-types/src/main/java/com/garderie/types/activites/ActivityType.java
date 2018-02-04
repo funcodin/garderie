@@ -11,6 +11,4 @@ public enum ActivityType {
     CHANGED_DIAPER,
     CLASS_PICTURE,
     PLAY_TIME,
-
-
 }

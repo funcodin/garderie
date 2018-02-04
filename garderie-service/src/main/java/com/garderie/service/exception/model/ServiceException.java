@@ -1,32 +1,29 @@
 package com.garderie.service.exception.model;
 
+import org.springframework.http.HttpStatus;
+
 public class ServiceException extends RuntimeException {
 
-    private static final long serialVersionUID = -8658131859261427602L;
+    private static final long serialVersionUID = 1L;
 
-    private String service;
+    private HttpStatus httpStatus;
 
-    public ServiceException(final String service) {
-        super();
-        this.service = service;
-    }
-
-    public ServiceException(final String message, final String service) {
+    public ServiceException(final String message ){
         super(message);
-        this.service = service;
     }
 
-    public ServiceException(final String message, final Throwable cause,
-                            final String service) {
+    public ServiceException(final String message, final HttpStatus httpStatus) {
+        super(message);
+        this.httpStatus = httpStatus;
+    }
+
+    public ServiceException(final String message, final HttpStatus httpStatus, final Throwable cause) {
+        super(message,cause);
+        this.httpStatus = httpStatus;
+    }
+
+    public ServiceException(final String message, final Throwable cause) {
         super(message, cause);
-        this.service = service;
     }
 
-    public String getService() {
-        return service;
-    }
-
-    public void setService(final String service) {
-        this.service = service;
-    }
 }

@@ -1,8 +1,8 @@
 package com.garderie.service.impl.jwt;
 
-import com.garderie.service.constants.SecurityConstants;
 import com.garderie.service.interfaces.TokenAuthenticationService;
 import com.garderie.types.security.auth.UserRequestAuthentication;
+import com.garderie.types.security.consts.SecurityConsts;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class JsonWebTokenAuthenticationService implements TokenAuthenticationSer
 
     @Override
     public Authentication authenticate(final HttpServletRequest request) {
-        final String token = request.getHeader(SecurityConstants.AUTH_HEADER_NAME);
+        final String token = request.getHeader(SecurityConsts.AUTH_HEADER_NAME);
         final Jws<Claims> tokenData = this.jsonWebTokenService.parseToken(token);
         if (tokenData != null) {
             return new UserRequestAuthentication(token);

@@ -1,9 +1,10 @@
 package com.garderie.service.aop;
 
-import com.garderie.service.constants.SecurityConstants;
 import com.garderie.service.exception.model.ServiceException;
 import com.garderie.service.interfaces.TokenService;
 import com.garderie.types.security.auth.permissions.ActionPermissions;
+import com.garderie.types.security.auth.token.JwtTokenData;
+import com.garderie.types.security.consts.SecurityConsts;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -39,13 +40,16 @@ public class PermissionsAspect {
         final PermissionsCheck securityCheck = method.getAnnotation(PermissionsCheck.class);
         final List<ActionPermissions> actionPermissions = Arrays.asList(securityCheck.hasPermissions());
         final HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        final String token = httpServletRequest.getHeader(SecurityConstants.AUTH_HEADER_NAME);
-
+        final String token = httpServletRequest.getHeader(SecurityConsts.AUTH_HEADER_NAME);
 
         LOGGER.info("Expected perms {}", actionPermissions);
 
-        List<ActionPermissions> actionPermissionsFromToken = this.tokenService.getActionPermissionFromJwtToken(token);
-            boolean authPassed = false;
+        final JwtTokenData jwtTokenData = this.tokenService.getJwtTokenDataFromJwtToken(token);
+        httpServletRequest.setAttribute(SecurityConsts.JWT_TOKEN_DATA, jwtTokenData);
+
+
+        final List<ActionPermissions> actionPermissionsFromToken = jwtTokenData.getActionPermissions();
+        boolean authPassed = false;
         for(ActionPermissions actionPermission : actionPermissions ){
             if(actionPermissionsFromToken.contains(actionPermission.name())){
                authPassed = true;

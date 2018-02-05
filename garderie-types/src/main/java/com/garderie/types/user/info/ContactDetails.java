@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.garderie.types.AbstractPersistable;
 
-public class ContactDetails extends AbstractPersistable{
+public class ContactDetails {
 
 	private List<String> cellPhoneNumbers;
 	private String homePhoneNumber;

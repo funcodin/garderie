@@ -1,18 +1,19 @@
 package com.garderie.types.org;
 
 import com.garderie.types.AbstractPersistable;
+import com.garderie.types.user.info.Address;
 
 public class Organisation extends AbstractPersistable {
 
     private String orgName;
     private OrgOwner orgOwner;
-    private OrganisationAddress organisationAddress;
+    private Address organisationAddress;
 
-    public OrganisationAddress getOrganisationAddress() {
+    public Address getOrganisationAddress() {
         return organisationAddress;
     }
 
-    public void setOrganisationAddress(OrganisationAddress organisationAddress) {
+    public void setOrganisationAddress(Address organisationAddress) {
         this.organisationAddress = organisationAddress;
     }
 

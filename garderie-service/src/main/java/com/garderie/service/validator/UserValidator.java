@@ -37,7 +37,6 @@ public class UserValidator extends AbstractValidator implements Validator<User> 
             errors.add(GarderieErrors.MISSING_CONTACT_DETAILS);
         }else{
             final ContactDetails contactDetails = user.getContactDetails();
-            this.setDefaultValues(contactDetails);
 
             if(CollectionUtils.isEmpty(contactDetails.getCellPhoneNumbers())){
                errors.add(GarderieErrors.MISSING_CELL_PHONE_NUMBER);
@@ -60,7 +59,6 @@ public class UserValidator extends AbstractValidator implements Validator<User> 
 
     public void validateAddress(final Address address, final List<GarderieErrors> errors){
 
-        this.setDefaultValues(address);
 
         if(StringUtils.isBlank(address.getStreetAddress()))
             errors.add(GarderieErrors.MISSING_STREET_ADDRESS);

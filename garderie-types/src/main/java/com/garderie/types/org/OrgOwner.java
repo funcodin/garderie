@@ -1,6 +1,5 @@
 package com.garderie.types.org;
 
-import com.garderie.types.AbstractPersistable;
 import com.garderie.types.user.info.ContactDetails;
 
 public class OrgOwner {
@@ -8,7 +7,7 @@ public class OrgOwner {
     private String firstName;
     private String middleName;
     private String lastName;
-    private OrgOwnerContactDetails contactDetails;
+    private ContactDetails contactDetails;
 
     public String getFirstName() {
         return firstName;
@@ -34,11 +33,11 @@ public class OrgOwner {
         this.lastName = lastName;
     }
 
-    public OrgOwnerContactDetails getContactDetails() {
+    public ContactDetails getContactDetails() {
         return contactDetails;
     }
 
-    public void setContactDetails(OrgOwnerContactDetails contactDetails) {
+    public void setContactDetails(ContactDetails contactDetails) {
         this.contactDetails = contactDetails;
     }
 }

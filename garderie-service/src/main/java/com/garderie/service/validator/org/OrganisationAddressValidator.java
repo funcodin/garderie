@@ -2,7 +2,7 @@ package com.garderie.service.validator.org;
 
 import com.garderie.service.errors.GarderieErrors;
 import com.garderie.service.validator.Validator;
-import com.garderie.types.org.OrganisationAddress;
+import com.garderie.types.user.info.Address;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -10,19 +10,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class OrganisationAddressValidator implements Validator<OrganisationAddress> {
+public class OrganisationAddressValidator implements Validator<Address> {
     @Override
-    public List<GarderieErrors> validatePreSave(OrganisationAddress organisationAddress) {
+    public List<GarderieErrors> validatePreSave(Address organisationAddress) {
         return null;
     }
 
     @Override
-    public List<GarderieErrors> validatePostSave(OrganisationAddress organisationAddress) {
+    public List<GarderieErrors> validatePostSave(Address organisationAddress) {
         return null;
     }
 
     @Override
-    public List<GarderieErrors> validate(final OrganisationAddress organisationAddress) {
+    public List<GarderieErrors> validate(final Address organisationAddress) {
         final List<GarderieErrors> errors = new ArrayList<>();
         if(StringUtils.isBlank(organisationAddress.getStreetAddress())){
             errors.add(GarderieErrors.MISSING_ORG_STREET_NAME);

@@ -2,7 +2,7 @@ package com.garderie.types.user.info;
 
 import com.garderie.types.AbstractPersistable;
 
-public class Address extends AbstractPersistable{
+public class Address {
 
 	private String streetAddress;
 	private String city;

@@ -1,18 +1,16 @@
 package com.garderie.types.user;
 
 import com.garderie.types.activites.Activity;
+import com.garderie.types.base.BaseObjectMapperTest;
 import com.garderie.types.dto.SignUpDTO;
 import com.garderie.types.org.Classroom;
 import com.garderie.types.org.OrgOwner;
 import com.garderie.types.org.Organisation;
-import com.garderie.types.org.OrganisationAddress;
+import com.garderie.types.user.types.Child;
+import com.garderie.types.user.types.Parent;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.garderie.types.base.BaseObjectMapperTest;
-import com.garderie.types.user.types.Child;
-import com.garderie.types.user.types.Parent;
 
 public class ModelMapperTest extends BaseObjectMapperTest{
 
@@ -41,12 +39,6 @@ public class ModelMapperTest extends BaseObjectMapperTest{
 	public void testOrganisationOwnerReadAndWrite() throws Exception {
 		final OrgOwner orgOwner = this.baseInfoTest.createOrgOwner();
 		log.info(this.objectMapper.writeValueAsString(orgOwner));
-	}
-
-	@Test
-	public void testOrganisationAddressReadAndWrite() throws Exception {
-		final OrganisationAddress organisationAddress = this.baseInfoTest.createOrgAddress();
-		log.info(this.objectMapper.writeValueAsString(organisationAddress));
 	}
 
 

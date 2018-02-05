@@ -11,7 +11,7 @@ import com.garderie.types.GarderieResponse;
 import com.garderie.types.org.OrgOwner;
 import com.garderie.types.org.Organisation;
 import com.garderie.types.security.auth.permissions.ActionPermissions;
-import com.garderie.types.org.OrganisationAddress;
+import com.garderie.types.user.info.Address;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -91,7 +91,7 @@ public class OrganisationController {
 
     @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_ORGANISATION})
     @RequestMapping(method = RequestMethod.POST, value = "/address/{orgId}")
-    public GarderieResponse addAddress(@PathVariable final String orgId, @RequestBody final OrganisationAddress organisationAddress) {
+    public GarderieResponse addAddress(@PathVariable final String orgId, @RequestBody final Address organisationAddress) {
         final GarderieResponse response = new GarderieResponse();
 
         final List<GarderieErrors> validationErrors = this.organisationAddressValidator.validate(organisationAddress);

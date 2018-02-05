@@ -14,21 +14,8 @@ import com.garderie.types.user.types.Parent;
 
 public class BaseInfoTest {
 
-	public OrganisationAddress createOrgAddress(){
-		OrganisationAddress address = new OrganisationAddress();
-		address.setStreetAddress("3146 Oak Raod Apt 212");
-		address.setCity("Walnut Creek");
-		address.setState("CA");
-		address.setCountry("USA");
-		address.setZipCode("91497");
-		return address;
-	}
-	
 	public Address createAddress(){
 		Address address = new Address();
-		address.setId(UUID.randomUUID().toString());
-		address.setCreatedDate(new Date());
-		address.setModifiedDate(new Date());
 		address.setStreetAddress("3146 Oak Raod Apt 212");
 		address.setCity("Walnut Creek");
 		address.setState("CA");
@@ -49,24 +36,14 @@ public class BaseInfoTest {
 
 	public OrgOwner createOrgOwner() {
 		final OrgOwner orgOwner = new OrgOwner();
-		orgOwner.setContactDetails(this.createOrgOwnerContactDetails());
+		orgOwner.setContactDetails(this.createContactDetails());
 		orgOwner.setFirstName("Rohit");
 		orgOwner.setMiddleName("Vijay");
 		orgOwner.setLastName("Dhumal");
 		return orgOwner;
 	}
 
-	public OrgOwnerContactDetails createOrgOwnerContactDetails() {
-		OrgOwnerContactDetails contactDetails = new OrgOwnerContactDetails();
-		List<String> cellPhoneNumbers = new ArrayList<>();
-		cellPhoneNumbers.add("201-565-6543");
-		cellPhoneNumbers.add("123-456-7654");
-		contactDetails.setCellPhoneNumbers(cellPhoneNumbers);
-		contactDetails.setHomePhoneNumber("232300");
-		return contactDetails;
-	}
-	
-	
+
 	public Parent createParent(){
 		final Parent parent = new Parent();
 		parent.setFirstName("Rohit");
@@ -166,7 +143,7 @@ public class BaseInfoTest {
 
 	public Organisation createOrganization(){
 		final Organisation organization = new Organisation();
-		organization.setOrganisationAddress(this.createOrgAddress());
+		organization.setOrganisationAddress(this.createAddress());
 		organization.setOrgName("Garderie Institute");
 		organization.setOrgOwner(this.createOrgOwner());
 		organization.setId(UUID.randomUUID().toString());

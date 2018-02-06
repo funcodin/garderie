@@ -10,21 +10,12 @@ import org.springframework.core.convert.converter.Converter;
 import java.util.Arrays;
 import java.util.Date;
 
-public class OrgOwnerUserDTOConverter implements Converter<SignUpDTO, UserAccountDetails> {
+public class OrgOwnerUserDTOConverter extends BaseUserSignUpDTOConverter {
 
     @Override
     public UserAccountDetails convert(final SignUpDTO dto) {
-        final UserAccountDetails user = new UserAccountDetails();
-        user.setEmailId(dto.getEmailId());
-        user.setEncryptedPassword(dto.getPassword());
-        user.setActive(false);
-        user.setAuthorities(Arrays.asList(Authority.ROLE_OWNER));
-        user.setSecretCode(RandomStringUtils.randomAlphabetic(5));
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
-        user.setAccountExpirationDate(DateUtils.addMonths(new Date(), 1));
-
-        return user;
+        final UserAccountDetails userAccountDetails = super.convert(dto);
+        userAccountDetails.setAuthorities(Arrays.asList(Authority.ROLE_OWNER));
+        return userAccountDetails;
     }
 }

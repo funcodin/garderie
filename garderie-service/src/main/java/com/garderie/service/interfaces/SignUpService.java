@@ -7,7 +7,7 @@ import com.garderie.types.security.auth.UserAuthentication;
 public interface SignUpService {
 
     public UserAccountDetails signUpOwner(final SignUpDTO signUpDTO );
-    public void signUpParent(final SignUpDTO signUpDTO);
-    public void signUpTeacher(final SignUpDTO signUpDTO);
+    public UserAccountDetails signUpParent(final SignUpDTO signUpDTO, final String orgId);
+    public UserAccountDetails signUpTeacher(final SignUpDTO signUpDTO, final String orgId);
     public UserAuthentication signUpUserWithCode(final SignUpDTO signUpDTO);
 }

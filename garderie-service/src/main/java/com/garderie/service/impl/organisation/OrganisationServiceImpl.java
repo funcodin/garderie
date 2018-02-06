@@ -50,7 +50,7 @@ public class OrganisationServiceImpl implements OrganisationService{
         userPermissions.setOrganisationId(createdOrganisation.getId());
         this.userPermissionsService.update(userPermissions);
 
-        return this.organisationRepository.save(organisation);
+        return createdOrganisation;
     }
 
     @Override

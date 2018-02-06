@@ -23,13 +23,15 @@ public class ConverterFactory {
 
     @PostConstruct
     public void init() {
-        converters = new HashMap<>();
-        converters.put("USER_DTO", new UserDTOConverter());
-        converters.put("ORG_OWNER", new OrgOwnerUserDTOConverter());
-        converters.put("USER_SALT", new UserSaltConverter());
+        this.converters = new HashMap<>();
+        this.converters.put("USER_DTO", new UserDTOConverter());
+        this.converters.put("ORG_OWNER", new OrgOwnerUserDTOConverter());
+        this.converters.put("USER_SALT", new UserSaltConverter());
+        this.converters.put("PARENT", new ParentUserDTOConverter());
+        this.converters.put("TEACHER", new TeacherUserDTOConverter());
     }
 
     public Converter getConverter(final String type) {
-        return converters.get(type);
+        return this.converters.get(type);
     }
 }

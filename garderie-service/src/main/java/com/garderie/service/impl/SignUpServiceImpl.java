@@ -37,62 +37,57 @@ public class SignUpServiceImpl implements SignUpService {
 
     @Override
     public UserAccountDetails signUpOwner(final SignUpDTO signUpDTO) {
-        final UserSalt userSaltCheck = this.userSaltService.findByEmailId(signUpDTO.getEmailId());
 
-        if (Objects.nonNull(userSaltCheck)) {
-            throw new ServiceException("Email already taken", HttpStatus.BAD_REQUEST);
-        }
-
-        final UserAccountDetails userAccountDetails = (UserAccountDetails) this.converterFactory.getConverter("ORG_OWNER").convert(signUpDTO);
-
-        final UserAccountDetails createdUserAccountDetails = this.userAccountDetailsService.create(userAccountDetails);
+        final UserAccountDetails createdUserAccountDetails = this.signUpUser(signUpDTO, "ORG_OWNER",null);
 
         //TODO send email with secret code
-
         //TODO if email fails delete user salt and user auth
 
         return createdUserAccountDetails;
     }
 
     @Override
-    public void signUpParent(final SignUpDTO signUpDTO) {
-
-        final UserSalt userSaltCheck = this.userSaltService.findByEmailId(signUpDTO.getEmailId());
-
-        if (Objects.nonNull(userSaltCheck)) {
-            throw new ServiceException("Email already taken", HttpStatus.BAD_REQUEST);
-        }
-
-        final UserAccountDetails userAccountDetails = this.userAccountDetailsService.findByEmailId(signUpDTO.getEmailId());
-
-        if (Objects.nonNull(userAccountDetails)) {
-            //TODO throw error
-        }
-
-        final UserAccountDetails parentUserAccountDetails = new UserAccountDetails();
-        parentUserAccountDetails.setEmailId(signUpDTO.getEmailId());
-        this.userAccountDetailsService.createParentWithCode(userAccountDetails);
+    public UserAccountDetails signUpParent(final SignUpDTO signUpDTO, final String orgId) {
+        final UserAccountDetails createdUserAccountDetails = this.signUpUser(signUpDTO, "PARENT", orgId);
+        //TODO send email with secret code
+        //TODO if email fails delete user salt and user auth
+        return createdUserAccountDetails;
 
     }
 
     @Override
-    public void signUpTeacher(SignUpDTO signUpDTO) {
+    public UserAccountDetails signUpTeacher(final SignUpDTO signUpDTO, final String orgId) {
+        final UserAccountDetails createdUserAccountDetails = this.signUpUser(signUpDTO, "TEACHER", orgId);
+
+        //TODO send email with secret code
+        //TODO if email fails delete user salt and user auth
+        return createdUserAccountDetails;
+
+    }
+
+    private UserAccountDetails signUpUser(final SignUpDTO signUpDTO, final String userType, final String orgId) {
         final UserSalt userSaltCheck = this.userSaltService.findByEmailId(signUpDTO.getEmailId());
 
         if (Objects.nonNull(userSaltCheck)) {
             throw new ServiceException("Email already taken", HttpStatus.BAD_REQUEST);
         }
 
-        final UserAccountDetails userAccountDetails = this.userAccountDetailsService.findByEmailId(signUpDTO.getEmailId());
+        final UserAccountDetails userAccountDetails = (UserAccountDetails) this.converterFactory.getConverter(userType).convert(signUpDTO);
 
-        if (Objects.nonNull(userAccountDetails)) {
+        final UserAccountDetails createdUserAccountDetails = this.userAccountDetailsService.create(userAccountDetails);
+
+        final Set<ActionPermissions> actionPermissions = this.userPermissionsService.getUserActionsByUserAuth(createdUserAccountDetails);
+        if (CollectionUtils.isEmpty(actionPermissions)) {
+            //this means we dont have mapping for authority to permissions
             //TODO throw error
         }
+        final UserPermissions userPermissions = new UserPermissions();
+        userPermissions.setEmailId(userAccountDetails.getEmailId());
+        userPermissions.setActionPermissions(actionPermissions);
+        userPermissions.setOrganisationId(orgId);
+        this.userPermissionsService.create(userPermissions);
 
-        final UserAccountDetails teacherAccountDetails = new UserAccountDetails();
-        teacherAccountDetails.setEmailId(signUpDTO.getEmailId());
-        this.userAccountDetailsService.createTeacherWithCode(userAccountDetails);
-
+        return createdUserAccountDetails;
     }
 
     @Override
@@ -109,7 +104,7 @@ public class SignUpServiceImpl implements SignUpService {
         final String salt = this.userSaltHashingService.generateSalt();
         userSalt.setSalt(salt);
 
-        this.userSaltService.create(userSalt);
+        final UserSalt createdUserSalt = this.userSaltService.create(userSalt);
 
         final UserAccountDetails userAccountDetails = this.userAccountDetailsService.findByEmailId(signUpDTO.getEmailId());
 
@@ -129,21 +124,17 @@ public class SignUpServiceImpl implements SignUpService {
         final String encryptedPassword = this.userSaltHashingService.generateHashWithSalt(signUpDTO.getPassword(), salt);
         userAccountDetails.setEncryptedPassword(encryptedPassword);
 
-        final UserAccountDetails updatedUserAccountDetails = this.userAccountDetailsService.create(userAccountDetails);
+        final UserAccountDetails updatedUserAccountDetails = this.userAccountDetailsService.update(userAccountDetails);
 
         //create user permissions
-        final Set<ActionPermissions> actionPermissions = this.userPermissionsService.getUserActionsByUserAuth(updatedUserAccountDetails);
-        if (CollectionUtils.isEmpty(actionPermissions)) {
-            //this means we dont have mapping for authority to permissions
-            //TODO throw error
-        }
-        final UserPermissions userPermissions = new UserPermissions();
-        userPermissions.setEmailId(userAccountDetails.getEmailId());
-        userPermissions.setActionPermissions(actionPermissions);
+        final UserPermissions userPermissions = this.userPermissionsService.findByEmailId(signUpDTO.getEmailId());
 
-        userAuthentication.setUserSalt(userSalt);
+        if(Objects.isNull(userPermissions)){
+            throw new ServiceException("Unable to assign user permissions",HttpStatus.BAD_REQUEST);
+        }
         userAuthentication.setUserAccountDetails(updatedUserAccountDetails);
-        userAuthentication.setUserPermissions(this.userPermissionsService.create(userPermissions));
+        userAuthentication.setUserPermissions(userPermissions);
+        userAuthentication.setUserSalt(createdUserSalt);
         //Generate and return token
         return userAuthentication;
 

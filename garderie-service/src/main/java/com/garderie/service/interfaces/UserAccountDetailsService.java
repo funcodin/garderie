@@ -15,11 +15,8 @@ public interface UserAccountDetailsService {
 
     List<UserAccountDetails> findAll();
 
-    UserAccountDetails update(String id, UserAccountDetails object);
+    UserAccountDetails update(UserAccountDetails object);
 
     String delete(String id);
 
-    UserAccountDetails createParentWithCode(UserAccountDetails userAccountDetails);
-
-    UserAccountDetails createTeacherWithCode(UserAccountDetails userAccountDetails);
 }

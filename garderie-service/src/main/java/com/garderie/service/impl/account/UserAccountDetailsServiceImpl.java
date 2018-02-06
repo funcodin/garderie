@@ -45,8 +45,9 @@ public class UserAccountDetailsServiceImpl implements UserAccountDetailsService,
     }
 
     @Override
-    public UserAccountDetails update(final String id, final UserAccountDetails user) {
-        return user;
+    public UserAccountDetails update(final UserAccountDetails user) {
+        user.setModifiedDate(new Date());
+        return this.repository.save(user);
     }
 
     @Override
@@ -63,27 +64,6 @@ public class UserAccountDetailsServiceImpl implements UserAccountDetailsService,
         } else {
             throw new UsernameNotFoundException("User with username:" + username + " not found");
         }
-    }
-
-    public UserAccountDetails createParentWithCode(final UserAccountDetails userAccountDetails) {
-        this.prepopulateUserAuth(userAccountDetails);
-        userAccountDetails.setAuthorities(Arrays.asList(Authority.ROLE_PARENT));
-        return this.repository.save(userAccountDetails);
-    }
-
-    public UserAccountDetails createTeacherWithCode(final UserAccountDetails userAccountDetails) {
-        this.prepopulateUserAuth(userAccountDetails);
-        userAccountDetails.setAuthorities(Arrays.asList(Authority.ROLE_TEACHER));
-        return this.repository.save(userAccountDetails);
-    }
-
-    private void prepopulateUserAuth(final UserAccountDetails userAccountDetails) {
-        userAccountDetails.setActive(false);
-        userAccountDetails.setAccountNonLocked(true);
-        userAccountDetails.setAccountNonExpired(true);
-        userAccountDetails.setCredentialsNonExpired(true);
-        userAccountDetails.setAccountExpirationDate(DateUtils.addMonths(new Date(), 6));
-        userAccountDetails.setSecretCode(RandomStringUtils.randomAlphabetic(5));
     }
 
 }

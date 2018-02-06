@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserPermissionsServiceImpl implements UserPermissionsService{
@@ -40,7 +37,13 @@ public class UserPermissionsServiceImpl implements UserPermissionsService{
 
     @Override
     public UserPermissions update(final UserPermissions userPermissions) {
-        return null;
+        final List<GarderieErrors> validationErrors = this.userPermissionsValidator.validatePreSave(userPermissions);
+        if(CollectionUtils.isNotEmpty(validationErrors)){
+            throw  new ServiceException(validationErrors.toString(), HttpStatus.BAD_REQUEST);
+        }
+        userPermissions.setModifiedDate(new Date());
+        final UserPermissions updatedUserPermissions = this.userPermissionsRepository.save(userPermissions);
+        return updatedUserPermissions;
     }
 
     @Override
@@ -79,7 +82,8 @@ public class UserPermissionsServiceImpl implements UserPermissionsService{
         }
 
         if(userAccountDetails.getAuthorities().contains(Authority.ROLE_PARENT)) {
-            //TODO figure out what they can do
+            actionPermissions.add(ActionPermissions.VIEW_ACTIVITY);
+            actionPermissions.add(ActionPermissions.VIEW_FEED);
         }
 
         if(userAccountDetails.getAuthorities().contains(Authority.ROLE_TEACHER)) {

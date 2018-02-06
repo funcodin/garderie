@@ -55,7 +55,7 @@ public class JsonWebTokenService implements TokenService {
     }
 
     @Override
-    public List<ActionPermissions> getActionPermissionFromJwtToken(String jwtToken) {
+    public List<ActionPermissions> getActionPermissionFromJwtToken(final String jwtToken) {
         final Jws<Claims> jwsClaims = this.parseToken(jwtToken);
         JwtTokenData jwtTokenData = this.getUserRequestAuthenticationFromToken(jwsClaims);
         return jwtTokenData.getActionPermissions();
@@ -87,6 +87,7 @@ public class JsonWebTokenService implements TokenService {
             jwtTokenData.setUserName(this.getTokenValueByKey(claims, "username").toString());
             jwtTokenData.setAuthorities((List<Authority>) this.getTokenValueByKey(claims, "user_role"));
             jwtTokenData.setActionPermissions((List<ActionPermissions>) this.getTokenValueByKey(claims, "user_permissions"));
+            jwtTokenData.setOrgId((String) this.getTokenValueByKey(claims, "org_id"));
             return jwtTokenData;
         } catch (UsernameNotFoundException usernamenotfound) {
             throw new UserNotFoundException("username not found ");

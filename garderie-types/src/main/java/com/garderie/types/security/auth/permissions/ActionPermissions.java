@@ -6,6 +6,8 @@ public enum ActionPermissions {
     ADD_TEACHER,
     ADD_ORGANISATION,
     ADD_ACTIVITY,
-    ADD_PICTURE;
+    ADD_PICTURE,
+    VIEW_ACTIVITY,
+    VIEW_FEED;
 
 }

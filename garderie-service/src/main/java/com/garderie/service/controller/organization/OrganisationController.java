@@ -7,6 +7,7 @@ import com.garderie.service.impl.auth.UserAuthenticationServiceImpl;
 import com.garderie.service.interfaces.OrganisationService;
 import com.garderie.service.interfaces.TokenService;
 import com.garderie.service.interfaces.UserPermissionsService;
+import com.garderie.service.util.ControllerUtil;
 import com.garderie.service.validator.OrgOwnerValidator;
 import com.garderie.service.validator.OrganisationValidator;
 import com.garderie.service.validator.org.OrganisationAddressValidator;
@@ -55,8 +56,7 @@ public class OrganisationController {
     public GarderieResponse createOrganisation(@RequestBody final Organisation organisation) {
         final GarderieResponse response = new GarderieResponse();
 
-        final HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        final JwtTokenData jwtTokenData = (JwtTokenData) httpServletRequest.getAttribute(SecurityConsts.JWT_TOKEN_DATA);
+        final JwtTokenData jwtTokenData = ControllerUtil.getTokenDataFromHttpRequest();
         final List<GarderieErrors> validationErrors = this.organisationValidator.validate(organisation);
 
         if (CollectionUtils.isNotEmpty(validationErrors)) {

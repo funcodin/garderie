@@ -35,6 +35,7 @@ public class JsonWebTokenService implements TokenService {
     public String generateJwtToken(final UserAuthentication userAuthentication) {
         Map<String, Object> jwtToken = new HashMap<>();
         //jwtToken.put("clientType", "user");
+        jwtToken.put("user_id", userAuthentication.getUserAccountDetails().getId());
         jwtToken.put("username", userAuthentication.getUserAccountDetails().getUsername());
         //tokenData.put("token_create_date", LocalDateTime.now());
         jwtToken.put("user_role", userAuthentication.getUserAccountDetails().getAuthorities());
@@ -88,6 +89,7 @@ public class JsonWebTokenService implements TokenService {
             jwtTokenData.setAuthorities((List<Authority>) this.getTokenValueByKey(claims, "user_role"));
             jwtTokenData.setActionPermissions((List<ActionPermissions>) this.getTokenValueByKey(claims, "user_permissions"));
             jwtTokenData.setOrgId((String) this.getTokenValueByKey(claims, "org_id"));
+            jwtTokenData.setUserId((String) this.getTokenValueByKey(claims, "user_id"));
             return jwtTokenData;
         } catch (UsernameNotFoundException usernamenotfound) {
             throw new UserNotFoundException("username not found ");

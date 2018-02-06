@@ -70,7 +70,7 @@ public class SignUpController {
         final GarderieResponse response = new GarderieResponse();
         this.validateSignUpRequest(signUpDTO);
         final JwtTokenData jwtTokenData = ControllerUtil.getTokenDataFromHttpRequest();
-        final UserAccountDetails userAccountDetails = this.signUpService.signUpTeacher(signUpDTO, jwtTokenData.getOrgId());
+        final UserAccountDetails userAccountDetails = this.signUpService.signUpTeacher(signUpDTO, jwtTokenData);
         return response;
     }
 

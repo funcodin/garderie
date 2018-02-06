@@ -9,6 +9,8 @@ import com.garderie.types.security.auth.UserAuthentication;
 import com.garderie.types.security.auth.UserSalt;
 import com.garderie.types.security.auth.permissions.ActionPermissions;
 import com.garderie.types.security.auth.permissions.UserPermissions;
+import com.garderie.types.security.auth.token.JwtTokenData;
+import com.garderie.types.user.types.Teacher;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +37,9 @@ public class SignUpServiceImpl implements SignUpService {
     @Autowired
     private UserPermissionsService userPermissionsService;
 
+    @Autowired
+    private TeacherService teacherService;
+
     @Override
     public UserAccountDetails signUpOwner(final SignUpDTO signUpDTO) {
 
@@ -56,8 +61,15 @@ public class SignUpServiceImpl implements SignUpService {
     }
 
     @Override
-    public UserAccountDetails signUpTeacher(final SignUpDTO signUpDTO, final String orgId) {
-        final UserAccountDetails createdUserAccountDetails = this.signUpUser(signUpDTO, "TEACHER", orgId);
+    public UserAccountDetails signUpTeacher(final SignUpDTO signUpDTO, final JwtTokenData jwtTokenData) {
+        //Create Teacher User accounts
+        final UserAccountDetails createdUserAccountDetails = this.signUpUser(signUpDTO, "TEACHER", jwtTokenData.getOrgId());
+        //Create Teacher info
+        final Teacher teacher = new Teacher();
+        teacher.setId(createdUserAccountDetails.getId());
+        teacher.setEmailId(createdUserAccountDetails.getEmailId());
+        teacher.setOrgId(jwtTokenData.getOrgId());
+        this.teacherService.create(teacher, jwtTokenData);
 
         //TODO send email with secret code
         //TODO if email fails delete user salt and user auth
@@ -78,10 +90,11 @@ public class SignUpServiceImpl implements SignUpService {
 
         final Set<ActionPermissions> actionPermissions = this.userPermissionsService.getUserActionsByUserAuth(createdUserAccountDetails);
         if (CollectionUtils.isEmpty(actionPermissions)) {
+            throw new ServiceException("Cannot find action permission for authority", HttpStatus.INTERNAL_SERVER_ERROR);
             //this means we dont have mapping for authority to permissions
-            //TODO throw error
         }
         final UserPermissions userPermissions = new UserPermissions();
+        userPermissions.setId(createdUserAccountDetails.getId());
         userPermissions.setEmailId(userAccountDetails.getEmailId());
         userPermissions.setActionPermissions(actionPermissions);
         userPermissions.setOrganisationId(orgId);
@@ -92,22 +105,7 @@ public class SignUpServiceImpl implements SignUpService {
 
     @Override
     public UserAuthentication signUpUserWithCode(final SignUpDTO signUpDTO) {
-        final UserAuthentication userAuthentication = new UserAuthentication();
-        final UserSalt userSaltCheck = this.userSaltService.findByEmailId(signUpDTO.getEmailId());
-
-        if (Objects.nonNull(userSaltCheck)) {
-            throw new ServiceException("Email already taken", HttpStatus.BAD_REQUEST);
-        }
-
-        final UserSalt userSalt = (UserSalt) this.converterFactory.getConverter("USER_SALT").convert(signUpDTO);
-
-        final String salt = this.userSaltHashingService.generateSalt();
-        userSalt.setSalt(salt);
-
-        final UserSalt createdUserSalt = this.userSaltService.create(userSalt);
-
         final UserAccountDetails userAccountDetails = this.userAccountDetailsService.findByEmailId(signUpDTO.getEmailId());
-
         if (Objects.isNull(userAccountDetails)) {
             throw new ServiceException("User does not exists");
         }
@@ -120,24 +118,39 @@ public class SignUpServiceImpl implements SignUpService {
             throw new ServiceException("Invalid code", HttpStatus.BAD_REQUEST);
         }
 
-        userAccountDetails.setActive(true);
-        final String encryptedPassword = this.userSaltHashingService.generateHashWithSalt(signUpDTO.getPassword(), salt);
-        userAccountDetails.setEncryptedPassword(encryptedPassword);
 
-        final UserAccountDetails updatedUserAccountDetails = this.userAccountDetailsService.update(userAccountDetails);
-
-        //create user permissions
         final UserPermissions userPermissions = this.userPermissionsService.findByEmailId(signUpDTO.getEmailId());
 
         if(Objects.isNull(userPermissions)){
             throw new ServiceException("Unable to assign user permissions",HttpStatus.BAD_REQUEST);
         }
+
+        final UserSalt userSaltCheck = this.userSaltService.findByEmailId(signUpDTO.getEmailId());
+
+        if (Objects.nonNull(userSaltCheck)) {
+            throw new ServiceException("Email already taken", HttpStatus.BAD_REQUEST);
+        }
+
+        final UserSalt userSalt = (UserSalt) this.converterFactory.getConverter("USER_SALT").convert(signUpDTO);
+
+        final String salt = this.userSaltHashingService.generateSalt();
+        userSalt.setId(userAccountDetails.getId());
+        userSalt.setSalt(salt);
+
+        final UserSalt createdUserSalt = this.userSaltService.create(userSalt);
+        final String encryptedPassword = this.userSaltHashingService.generateHashWithSalt(signUpDTO.getPassword(), salt);
+
+        userAccountDetails.setEncryptedPassword(encryptedPassword);
+        userAccountDetails.setActive(true);
+
+        final UserAccountDetails updatedUserAccountDetails = this.userAccountDetailsService.update(userAccountDetails);
+
+
+        final UserAuthentication userAuthentication = new UserAuthentication();
         userAuthentication.setUserAccountDetails(updatedUserAccountDetails);
         userAuthentication.setUserPermissions(userPermissions);
         userAuthentication.setUserSalt(createdUserSalt);
-        //Generate and return token
+
         return userAuthentication;
-
-
     }
 }

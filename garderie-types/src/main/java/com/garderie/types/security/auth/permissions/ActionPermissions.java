@@ -10,4 +10,5 @@ public enum ActionPermissions {
     VIEW_ACTIVITY,
     VIEW_FEED;
 
+
 }

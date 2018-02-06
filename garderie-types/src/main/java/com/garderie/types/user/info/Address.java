@@ -1,7 +1,5 @@
 package com.garderie.types.user.info;
 
-import com.garderie.types.AbstractPersistable;
-
 public class Address {
 
 	private String streetAddress;

@@ -7,10 +7,19 @@ import java.util.List;
 
 public class JwtTokenData {
 
+    private String userId;
     private List<Authority> authorities;
     private String userName;
     private List<ActionPermissions> actionPermissions;
     private String orgId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public List<Authority> getAuthorities() {
         return authorities;

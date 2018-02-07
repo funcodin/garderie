@@ -75,6 +75,7 @@ public class UserPermissionsServiceImpl implements UserPermissionsService{
         }
 
         if(userAccountDetails.getAuthorities().contains(Authority.ROLE_OWNER)) {
+            actionPermissions.add(ActionPermissions.ADD_OWNER);
             actionPermissions.add(ActionPermissions.ADD_ACTIVITY);
             actionPermissions.add(ActionPermissions.ADD_ORGANISATION);
             actionPermissions.add(ActionPermissions.ADD_PARENT);

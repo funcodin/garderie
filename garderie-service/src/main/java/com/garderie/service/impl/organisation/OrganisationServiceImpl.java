@@ -4,12 +4,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.garderie.service.errors.GarderieErrors;
 import com.garderie.service.exception.model.ServiceException;
 import com.garderie.service.impl.auth.UserAuthenticationServiceImpl;
+import com.garderie.service.interfaces.OrgOwnerService;
 import com.garderie.service.interfaces.OrganisationService;
 import com.garderie.service.interfaces.TokenService;
 import com.garderie.service.interfaces.UserPermissionsService;
 import com.garderie.service.repository.organisation.OrganisationRepository;
 import com.garderie.service.validator.org.OrganisationAddressValidator;
+import com.garderie.types.org.OrgOwner;
 import com.garderie.types.org.Organisation;
+import com.garderie.types.security.auth.UserAuthentication;
 import com.garderie.types.security.auth.permissions.UserPermissions;
 import com.garderie.types.security.auth.token.JwtTokenData;
 import org.apache.commons.collections4.CollectionUtils;
@@ -34,8 +37,6 @@ public class OrganisationServiceImpl implements OrganisationService {
     @Autowired
     private UserAuthenticationServiceImpl userAuthenticationService;
 
-    @Autowired
-    private OrganisationService organisationService;
 
     @Autowired
     private TokenService tokenService;
@@ -43,22 +44,36 @@ public class OrganisationServiceImpl implements OrganisationService {
     @Autowired
     private OrganisationAddressValidator organisationAddressValidator;
 
+    @Autowired
+    private OrgOwnerService orgOwnerService;
+
 
     @Override
     public Organisation create(final Organisation organisation, final JwtTokenData jwtTokenData) {
 
 
         //Get user from jwt token check if user already has organisation assigned
-        final UserPermissions userPermissions = this.userPermissionsService.findByEmailId(jwtTokenData.getUserName());
-        if (StringUtils.isNotBlank(userPermissions.getOrganisationId())) {
+        final UserAuthentication userAuthentication = this.userAuthenticationService.getUserAuthenticationByEmailId(jwtTokenData.getUserName());
+        if (StringUtils.isNotBlank(userAuthentication.getUserPermissions().getOrganisationId())) {
             throw new ServiceException("User cannot create more than one organisation", HttpStatus.BAD_REQUEST);
         }
 
+        organisation.setOrgOwnerId(jwtTokenData.getUserId());
         final Organisation createdOrganisation = this.organisationRepository.save(organisation);
 
         //set user permissions with
-        userPermissions.setOrganisationId(createdOrganisation.getId());
-        this.userPermissionsService.update(userPermissions);
+        userAuthentication.getUserPermissions().setOrganisationId(createdOrganisation.getId());
+        this.userPermissionsService.update(userAuthentication.getUserPermissions());
+
+        final OrgOwner orgOwner = this.orgOwnerService.findByEmailId(userAuthentication.getUserAccountDetails().getEmailId());
+
+        if (Objects.isNull(orgOwner)) {
+            throw new ServiceException("Could find owner for created organisation", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        //Update org owner with org id
+        orgOwner.setOrgId(createdOrganisation.getId());
+        this.orgOwnerService.updateOrgOwnerOrgIdInternally(userAuthentication.getUserAccountDetails().getId(), createdOrganisation.getId());
 
         return createdOrganisation;
     }

@@ -63,11 +63,6 @@ public class OrganisationController {
         tokenDTO.setToken(updatedToken);
         response.addData(tokenDTO);
 
-        if (Objects.isNull(createdOrganisation.getOrgOwner())) {
-            response.setNextStep("ORG_OWNER_INFO");
-            return response;
-        }
-
         if (Objects.isNull(createdOrganisation.getOrganisationAddress())) {
             response.setNextStep("ORG_ADDRESS_INFO");
             return response;

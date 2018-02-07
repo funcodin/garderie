@@ -78,6 +78,7 @@ public class OrganisationflowIT extends BaseGarderieITTest{
         this.userSaltService.deleteByEmailId(updatedJwtTokenData.getUserName());
         this.userPermissionsService.deleteByEmailId(updatedJwtTokenData.getUserName());
         this.organisationService.deletedById(updatedJwtTokenData.getOrgId());
+        this.orgOwnerService.deleteByOrgOwnerId(updatedJwtTokenData.getUserId());
 
 
         Assert.assertNotNull(updatedTokeResponse);

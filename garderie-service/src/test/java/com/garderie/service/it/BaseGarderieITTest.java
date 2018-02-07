@@ -3,10 +3,7 @@ package com.garderie.service.it;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.garderie.service.GarderieApplication;
 import com.garderie.service.dto.TokenDTO;
-import com.garderie.service.interfaces.TokenService;
-import com.garderie.service.interfaces.UserAccountDetailsService;
-import com.garderie.service.interfaces.UserPermissionsService;
-import com.garderie.service.interfaces.UserSaltService;
+import com.garderie.service.interfaces.*;
 import com.garderie.types.GarderieResponse;
 import com.garderie.types.dto.SignUpDTO;
 import com.garderie.types.security.auth.UserAccountDetails;
@@ -40,6 +37,9 @@ public abstract class BaseGarderieITTest {
 
     @Autowired
     public TokenService tokenService;
+
+    @Autowired
+    public OrgOwnerService orgOwnerService;
 
 
     private TestRestTemplate restTemplate = new TestRestTemplate();

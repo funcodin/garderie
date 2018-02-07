@@ -1,9 +1,6 @@
 package com.garderie.types.base;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import com.garderie.types.activites.Activity;
 import com.garderie.types.activites.ActivityType;
@@ -26,7 +23,7 @@ public class BaseInfoTest {
 	
 	public ContactDetails createContactDetails(){
 		final ContactDetails contactDetails = new ContactDetails();
-		List<String> cellPhoneNumbers = new ArrayList<>();
+		Set<String> cellPhoneNumbers = new HashSet<>();
 		cellPhoneNumbers.add("201-565-6543");
 		cellPhoneNumbers.add("123-456-7654");
 		contactDetails.setCellPhoneNumbers(cellPhoneNumbers);
@@ -144,8 +141,9 @@ public class BaseInfoTest {
 	public Organisation createOrganization(){
 		final Organisation organization = new Organisation();
 		organization.setOrganisationAddress(this.createAddress());
+		organization.setOrgOwnerId(UUID.randomUUID().toString());
 		organization.setOrgName("Garderie Institute");
-		organization.setOrgOwner(this.createOrgOwner());
+		//organization.setOrgOwner(this.createOrgOwner());
 		organization.setId(UUID.randomUUID().toString());
 		organization.setCreatedDate(new Date());
 		organization.setModifiedDate(new Date());

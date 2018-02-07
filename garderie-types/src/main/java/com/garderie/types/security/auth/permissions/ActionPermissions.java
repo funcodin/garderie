@@ -2,6 +2,7 @@ package com.garderie.types.security.auth.permissions;
 
 public enum ActionPermissions {
 
+    ADD_OWNER,
     ADD_PARENT,
     ADD_TEACHER,
     ADD_ORGANISATION,

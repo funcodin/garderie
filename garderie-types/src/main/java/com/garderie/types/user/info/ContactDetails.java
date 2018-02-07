@@ -1,17 +1,18 @@
 package com.garderie.types.user.info;
 
 import java.util.List;
+import java.util.Set;
 
 public class ContactDetails {
 
-	private List<String> cellPhoneNumbers;
+	private Set<String> cellPhoneNumbers;
 	private String homePhoneNumber;
 	private String workPhoneNumber;
 	
-	public List<String> getCellPhoneNumbers() {
+	public Set<String> getCellPhoneNumbers() {
 		return this.cellPhoneNumbers;
 	}
-	public void setCellPhoneNumbers(final List<String> cellPhoneNumbers) {
+	public void setCellPhoneNumbers(final Set<String> cellPhoneNumbers) {
 		this.cellPhoneNumbers = cellPhoneNumbers;
 	}
 	public String getHomePhoneNumber() {

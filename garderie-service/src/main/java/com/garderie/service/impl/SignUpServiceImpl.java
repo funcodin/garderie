@@ -4,6 +4,7 @@ import com.garderie.service.converter.ConverterFactory;
 import com.garderie.service.exception.model.ServiceException;
 import com.garderie.service.interfaces.*;
 import com.garderie.types.dto.SignUpDTO;
+import com.garderie.types.org.OrgOwner;
 import com.garderie.types.security.auth.UserAccountDetails;
 import com.garderie.types.security.auth.UserAuthentication;
 import com.garderie.types.security.auth.UserSalt;
@@ -40,10 +41,18 @@ public class SignUpServiceImpl implements SignUpService {
     @Autowired
     private TeacherService teacherService;
 
+    @Autowired
+    private OrgOwnerService orgOwnerService;
+
     @Override
     public UserAccountDetails signUpOwner(final SignUpDTO signUpDTO) {
 
         final UserAccountDetails createdUserAccountDetails = this.signUpUser(signUpDTO, "ORG_OWNER",null);
+
+        final OrgOwner orgOwner = new OrgOwner();
+        orgOwner.setId(createdUserAccountDetails.getId());
+        orgOwner.setEmailId(createdUserAccountDetails.getEmailId());
+        this.orgOwnerService.createOrgOwnerInternally(orgOwner);
 
         //TODO send email with secret code
         //TODO if email fails delete user salt and user auth

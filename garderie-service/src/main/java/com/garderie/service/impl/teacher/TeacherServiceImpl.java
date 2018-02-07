@@ -110,6 +110,8 @@ public class TeacherServiceImpl implements TeacherService {
             existingTeacher.setGender(teacher.getGender());
         }
 
+        existingTeacher.setModifiedDate(new Date());
+
         return this.teacherRepository.save(existingTeacher);
     }
 

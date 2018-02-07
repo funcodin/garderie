@@ -22,12 +22,10 @@ public class BasicTests extends BaseGarderieITTest {
 
     @Test
     public void testPostMethod(){
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         LoginDTO loginDTO = new LoginDTO();
         loginDTO.setUsername("rvd@gmail.com");
         loginDTO.setPassword("password");
-        HttpEntity httpEntity = new HttpEntity(loginDTO, httpHeaders);
+        HttpEntity httpEntity = new HttpEntity(loginDTO, this.createDefaultHeaders());
         ResponseEntity<String> response = (ResponseEntity<String>) this.executePostRequest("/garderie/api/auth", httpEntity, String.class);
         System.out.println( "*****"+response.getBody());
 

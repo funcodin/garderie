@@ -76,7 +76,7 @@ public class TeacherServiceImpl implements TeacherService {
             throw new ServiceException("Teacher cannot be empty", HttpStatus.BAD_REQUEST);
         }
 
-        if(!teacherId.equalsIgnoreCase(jwtTokenData.getUserId())){
+        if(!teacherId.equals(jwtTokenData.getUserId())){
             throw new ServiceException("Teacher profile can be updated by profile owner", HttpStatus.BAD_REQUEST);
         }
 

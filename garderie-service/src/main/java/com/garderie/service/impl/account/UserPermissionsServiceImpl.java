@@ -48,6 +48,7 @@ public class UserPermissionsServiceImpl implements UserPermissionsService{
 
     @Override
     public void deleteByEmailId(String emailId) {
+        this.userPermissionsRepository.deleteByEmailId(emailId);
 
     }
 

@@ -56,7 +56,6 @@ public class OrganisationServiceImpl implements OrganisationService {
 
         //set user permissions with
         userAccountDetails.setOrganisationId(createdOrganisation.getId());
-        userAccountDetails.setOrganisationId(createdOrganisation.getId());
         this.userAccountDetailsService.update(userAccountDetails);
 
 

@@ -49,7 +49,6 @@ public class OrganisationController {
         if (CollectionUtils.isNotEmpty(validationErrors)) {
             throw new ServiceException(validationErrors.toString(), HttpStatus.BAD_REQUEST);
         }
-            //TODO add ownerid from jwtotkendata
         final Organisation createdOrganisation = this.organisationService.create(organisation, jwtTokenData);
         //response.addData(createdOrganisation);
 

@@ -93,7 +93,7 @@ public class SignUpServiceImpl implements SignUpService {
         if(CollectionUtils.isEmpty(actionPermissions)) {
             throw new ServiceException("Cannot find action permission for authority", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
+        userAccountDetails.setOrganisationId(orgId);
         userAccountDetails.setActionPermissions(actionPermissions);
 
         final UserAccountDetails createdUserAccountDetails = this.userAccountDetailsService.create(userAccountDetails);

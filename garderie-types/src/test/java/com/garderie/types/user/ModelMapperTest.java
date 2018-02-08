@@ -8,6 +8,7 @@ import com.garderie.types.org.OrgOwner;
 import com.garderie.types.org.Organisation;
 import com.garderie.types.user.types.Child;
 import com.garderie.types.user.types.Parent;
+import com.garderie.types.user.types.Teacher;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +23,13 @@ public class ModelMapperTest extends BaseObjectMapperTest{
 		log.info(this.objectMapper.writeValueAsString(parent));
 		
 	}
-	
+
+	@Test
+	public void testTeacherReadAndWrtie() throws Exception {
+		Teacher teacher = this.baseInfoTest.createTeacher();
+		log.info(this.objectMapper.writeValueAsString(teacher));
+	}
+
 	@Test
 	public void testChildReadAndWrite() throws Exception {
 		final Child child = this.baseInfoTest.createChild();

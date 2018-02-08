@@ -30,7 +30,7 @@ public class TeacherController {
         return response;
     }
 
-    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_TEACHER})
+    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_PICTURE})
     @RequestMapping(method = RequestMethod.PUT)
     public GarderieResponse updateTeacher(@RequestBody final Teacher teacher) {
         final GarderieResponse response = new GarderieResponse();
@@ -42,7 +42,7 @@ public class TeacherController {
         return response;
     }
 
-    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_TEACHER})
+    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_PICTURE})
     @RequestMapping(method = RequestMethod.DELETE, value = "/{teacherId}")
     public GarderieResponse deleteTeacher(@PathVariable String teacherId) {
         final GarderieResponse response = new GarderieResponse();

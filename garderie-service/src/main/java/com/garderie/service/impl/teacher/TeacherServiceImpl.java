@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -45,8 +46,8 @@ public class TeacherServiceImpl implements TeacherService {
             throw new ServiceException("Teacher must have email id", HttpStatus.BAD_REQUEST);
         }
 
-
-        if( !jwtTokenData.getAuthorities().contains(Authority.ROLE_OWNER) ) {
+            List<Authority> authorityList = jwtTokenData.getAuthorities();
+        if( !authorityList.contains(Authority.ROLE_OWNER.getAuthority()) ) {
             throw new ServiceException("Teacher can be created by only owner of the org", HttpStatus.BAD_REQUEST);
         }
 

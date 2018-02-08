@@ -163,12 +163,15 @@ public class BaseInfoTest {
 
     public Classroom createClassroom() {
         final Classroom classroom = new Classroom();
-        classroom.setDescription("Class room for ages between 5-10");
         classroom.setName("Class room 1");
         classroom.setOrgId(UUID.randomUUID().toString());
         classroom.setId(UUID.randomUUID().toString());
         classroom.setCreatedDate(new Date());
         classroom.setModifiedDate(new Date());
+        Set<String> studentIds = new HashSet<>();
+        studentIds.add(UUID.randomUUID().toString());
+        studentIds.add(UUID.randomUUID().toString());
+        classroom.setStudentIds(studentIds);
         return classroom;
     }
 

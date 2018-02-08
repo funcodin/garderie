@@ -80,6 +80,7 @@ public class UserAccountDetailsServiceImpl implements UserAccountDetailsService,
             actionPermissions.add(ActionPermissions.ADD_PARENT);
             actionPermissions.add(ActionPermissions.ADD_TEACHER);
             actionPermissions.add(ActionPermissions.ADD_PICTURE);
+            actionPermissions.add(ActionPermissions.ADD_CLASSROOM);
         }
 
         if(userAuthorities.contains(Authority.ROLE_PARENT)) {

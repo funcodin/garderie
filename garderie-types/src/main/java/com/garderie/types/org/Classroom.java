@@ -1,6 +1,7 @@
 package com.garderie.types.org;
 
 import java.util.List;
+import java.util.Set;
 
 import com.garderie.types.AbstractPersistable;
 import com.garderie.types.user.info.Address;
@@ -8,7 +9,7 @@ import com.garderie.types.user.info.Address;
 public class Classroom extends AbstractPersistable{
 	private String orgId;
 	private String name;
-	private String description;
+	private Set<String> studentIds;
 
 	public String getOrgId() {
 		return this.orgId;
@@ -22,11 +23,11 @@ public class Classroom extends AbstractPersistable{
 	public void setName(final String name) {
 		this.name = name;
 	}
-	public String getDescription() {
-		return this.description;
-	}
-	public void setDescription(final String description) {
-		this.description = description;
+	public Set<String> getStudentIds() {
+		return studentIds;
 	}
 
+	public void setStudentIds(Set<String> studentIds) {
+		this.studentIds = studentIds;
+	}
 }

@@ -68,7 +68,12 @@ public class ModelMapperTest extends BaseObjectMapperTest{
 		signUpDTO.setPassword("password");
 		signUpDTO.setConfirmPassword("password");
 		log.info(this.objectMapper.writeValueAsString(signUpDTO));
+	}
 
+	@Test
+	public void testClassRooms() throws Exception {
+		final Classroom classroom = this.baseInfoTest.createClassroom();
+		log.info(this.objectMapper.writeValueAsString(classroom));
 	}
 	
 }

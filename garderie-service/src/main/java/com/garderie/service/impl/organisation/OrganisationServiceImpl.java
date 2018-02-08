@@ -2,7 +2,6 @@ package com.garderie.service.impl.organisation;
 
 import com.garderie.service.errors.GarderieErrors;
 import com.garderie.service.exception.model.ServiceException;
-import com.garderie.service.impl.auth.UserAuthenticationServiceImpl;
 import com.garderie.service.interfaces.OrgOwnerService;
 import com.garderie.service.interfaces.OrganisationService;
 import com.garderie.service.interfaces.TokenService;
@@ -11,7 +10,7 @@ import com.garderie.service.repository.organisation.OrganisationRepository;
 import com.garderie.service.validator.org.OrganisationAddressValidator;
 import com.garderie.types.org.OrgOwner;
 import com.garderie.types.org.Organisation;
-import com.garderie.types.security.auth.UserAuthentication;
+import com.garderie.types.security.auth.UserAccountDetails;
 import com.garderie.types.security.auth.token.JwtTokenData;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -28,9 +27,6 @@ public class OrganisationServiceImpl implements OrganisationService {
 
     @Autowired
     private OrganisationRepository organisationRepository;
-
-    @Autowired
-    private UserAuthenticationServiceImpl userAuthenticationService;
 
     @Autowired
     private UserAccountDetailsService userAccountDetailsService;
@@ -50,8 +46,8 @@ public class OrganisationServiceImpl implements OrganisationService {
 
 
         //Get user from jwt token check if user already has organisation assigned
-        final UserAuthentication userAuthentication = this.userAuthenticationService.getUserAuthenticationByEmailId(jwtTokenData.getUserName());
-        if (StringUtils.isNotBlank(userAuthentication.getUserAccountDetails().getOrganisationId())) {
+        final UserAccountDetails userAccountDetails = this.userAccountDetailsService.findByEmailId(jwtTokenData.getUserName());
+        if (StringUtils.isNotBlank(userAccountDetails.getOrganisationId())) {
             throw new ServiceException("User cannot create more than one organisation", HttpStatus.BAD_REQUEST);
         }
 
@@ -59,12 +55,12 @@ public class OrganisationServiceImpl implements OrganisationService {
         final Organisation createdOrganisation = this.organisationRepository.save(organisation);
 
         //set user permissions with
-        userAuthentication.getUserAccountDetails().setOrganisationId(createdOrganisation.getId());
-        userAuthentication.getUserAccountDetails().setOrganisationId(createdOrganisation.getId());
-        this.userAccountDetailsService.update(userAuthentication.getUserAccountDetails());
+        userAccountDetails.setOrganisationId(createdOrganisation.getId());
+        userAccountDetails.setOrganisationId(createdOrganisation.getId());
+        this.userAccountDetailsService.update(userAccountDetails);
 
 
-        final OrgOwner orgOwner = this.orgOwnerService.findByEmailId(userAuthentication.getUserAccountDetails().getEmailId());
+        final OrgOwner orgOwner = this.orgOwnerService.findByEmailId(userAccountDetails.getEmailId());
 
         if (Objects.isNull(orgOwner)) {
             throw new ServiceException("Could find owner for created organisation", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -72,7 +68,7 @@ public class OrganisationServiceImpl implements OrganisationService {
 
         //Update org owner with org id
         orgOwner.setOrgId(createdOrganisation.getId());
-        this.orgOwnerService.updateOrgOwnerOrgIdInternally(userAuthentication.getUserAccountDetails().getId(), createdOrganisation.getId());
+        this.orgOwnerService.updateOrgOwnerOrgIdInternally(userAccountDetails.getId(), createdOrganisation.getId());
 
         return createdOrganisation;
     }

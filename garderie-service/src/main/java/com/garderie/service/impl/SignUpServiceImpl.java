@@ -6,7 +6,6 @@ import com.garderie.service.interfaces.*;
 import com.garderie.types.dto.SignUpDTO;
 import com.garderie.types.org.OrgOwner;
 import com.garderie.types.security.auth.UserAccountDetails;
-import com.garderie.types.security.auth.UserAuthentication;
 import com.garderie.types.security.auth.permissions.ActionPermissions;
 import com.garderie.types.security.auth.token.JwtTokenData;
 import com.garderie.types.user.types.Teacher;
@@ -103,7 +102,7 @@ public class SignUpServiceImpl implements SignUpService {
     }
 
     @Override
-    public UserAuthentication signUpUserWithCode(final SignUpDTO signUpDTO) {
+    public UserAccountDetails signUpUserWithCode(final SignUpDTO signUpDTO) {
         final UserAccountDetails userAccountDetails = this.userAccountDetailsService.findByEmailId(signUpDTO.getEmailId());
         if (Objects.isNull(userAccountDetails)) {
             throw new ServiceException("User does not exists");
@@ -120,7 +119,6 @@ public class SignUpServiceImpl implements SignUpService {
 
 
         final String salt = this.userSaltHashingService.generateSalt();
-
         final String encryptedPassword = this.userSaltHashingService.generateHashWithSalt(signUpDTO.getPassword(), salt);
 
         userAccountDetails.setEncryptedPassword(encryptedPassword);
@@ -129,9 +127,6 @@ public class SignUpServiceImpl implements SignUpService {
 
         final UserAccountDetails updatedUserAccountDetails = this.userAccountDetailsService.update(userAccountDetails);
 
-        final UserAuthentication userAuthentication = new UserAuthentication();
-        userAuthentication.setUserAccountDetails(updatedUserAccountDetails);
-
-        return userAuthentication;
+        return updatedUserAccountDetails;
     }
 }

@@ -12,7 +12,6 @@ import com.garderie.service.validator.dto.SignupWithCodeValidator;
 import com.garderie.types.GarderieResponse;
 import com.garderie.types.dto.SignUpDTO;
 import com.garderie.types.security.auth.UserAccountDetails;
-import com.garderie.types.security.auth.UserAuthentication;
 import com.garderie.types.security.auth.permissions.ActionPermissions;
 import com.garderie.types.security.auth.token.JwtTokenData;
 import org.apache.commons.collections4.CollectionUtils;
@@ -83,9 +82,9 @@ public class SignUpController {
             throw new ServiceException(validationErrors.toString(), HttpStatus.BAD_REQUEST);
         }
 
-        final UserAuthentication userAuthentication = this.signUpService.signUpUserWithCode(signUpDTO);
+        final UserAccountDetails userAccountDetails = this.signUpService.signUpUserWithCode(signUpDTO);
 
-        final String token = this.tokenService.generateJwtToken(userAuthentication);
+        final String token = this.tokenService.generateJwtToken(userAccountDetails);
         final TokenDTO tokenDTO = new TokenDTO();
         tokenDTO.setToken(token);
 

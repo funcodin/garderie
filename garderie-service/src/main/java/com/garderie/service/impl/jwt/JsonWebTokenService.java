@@ -1,10 +1,10 @@
 package com.garderie.service.impl.jwt;
 
 import com.garderie.service.exception.model.UserNotFoundException;
-import com.garderie.service.impl.auth.UserAuthenticationServiceImpl;
 import com.garderie.service.interfaces.TokenService;
+import com.garderie.service.interfaces.UserAccountDetailsService;
 import com.garderie.types.security.auth.Authority;
-import com.garderie.types.security.auth.UserAuthentication;
+import com.garderie.types.security.auth.UserAccountDetails;
 import com.garderie.types.security.auth.permissions.ActionPermissions;
 import com.garderie.types.security.auth.token.JwtTokenData;
 import io.jsonwebtoken.*;
@@ -29,18 +29,18 @@ public class JsonWebTokenService implements TokenService {
     private String tokenKey;
 
     @Autowired
-    private UserAuthenticationServiceImpl userAuthenticationService;
+    UserAccountDetailsService userAccountDetailsService;
 
     @Override
-    public String generateJwtToken(final UserAuthentication userAuthentication) {
+    public String generateJwtToken(final UserAccountDetails userAccountDetails) {
         Map<String, Object> jwtToken = new HashMap<>();
         //jwtToken.put("clientType", "user");
-        jwtToken.put("user_id", userAuthentication.getUserAccountDetails().getId());
-        jwtToken.put("username", userAuthentication.getUserAccountDetails().getUsername());
+        jwtToken.put("user_id", userAccountDetails.getId());
+        jwtToken.put("username", userAccountDetails.getUsername());
         //tokenData.put("token_create_date", LocalDateTime.now());
-        jwtToken.put("user_role", userAuthentication.getUserAccountDetails().getAuthorities());
-        jwtToken.put("user_permissions", userAuthentication.getUserAccountDetails().getActionPermissions());
-        jwtToken.put("org_id", userAuthentication.getUserAccountDetails().getOrganisationId());
+        jwtToken.put("user_role", userAccountDetails.getAuthorities());
+        jwtToken.put("user_permissions", userAccountDetails.getActionPermissions());
+        jwtToken.put("org_id", userAccountDetails.getOrganisationId());
         JwtBuilder jwtBuilder = Jwts.builder();
         Instant instant = LocalDateTime.now().toInstant(ZoneOffset.UTC);
         jwtBuilder.setExpiration(Date.from(instant));
@@ -51,11 +51,11 @@ public class JsonWebTokenService implements TokenService {
 
     @Override
     public String generateJwtTokenByEmailId(final String emailId) {
-        final UserAuthentication userAuthentication = this.userAuthenticationService.getUserAuthenticationByEmailId(emailId);
-        return this.generateJwtToken(userAuthentication);
+        final UserAccountDetails userAccountDetails = this.userAccountDetailsService.findByEmailId(emailId);
+        return this.generateJwtToken(userAccountDetails);
     }
 
-    @Override
+    //TODO REMOVE THIS METHOD IF NOT USED
     public List<ActionPermissions> getActionPermissionFromJwtToken(final String jwtToken) {
         final Jws<Claims> jwsClaims = this.parseToken(jwtToken);
         JwtTokenData jwtTokenData = this.getUserRequestAuthenticationFromToken(jwsClaims);

@@ -2,10 +2,10 @@ package com.garderie.service.controller.auth;
 
 import com.garderie.service.dto.LoginDTO;
 import com.garderie.service.dto.TokenDTO;
-import com.garderie.service.impl.auth.UserAuthenticationServiceImpl;
 import com.garderie.service.interfaces.TokenService;
+import com.garderie.service.interfaces.UserAccountDetailsService;
 import com.garderie.service.interfaces.UserSaltHashingService;
-import com.garderie.types.security.auth.UserAuthentication;
+import com.garderie.types.security.auth.UserAccountDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +25,7 @@ public class AuthenticationController {
     private UserSaltHashingService userSaltHashingService;
 
     @Autowired
-    private UserAuthenticationServiceImpl userAuthenticationService;
-
+    private UserAccountDetailsService userAccountDetailsService;
 
 
     @RequestMapping(method = RequestMethod.POST)
@@ -34,15 +33,14 @@ public class AuthenticationController {
 
         //TODO Add validation
 
-        final UserAuthentication userAuthentication = this.userAuthenticationService.getUserAuthenticationByEmailId(dto.getUsername());
+        final UserAccountDetails userAccountDetails = this.userAccountDetailsService.findByEmailId(dto.getUsername());
+        final String encryptedPassword = this.userSaltHashingService.generateHashWithSalt(dto.getPassword(), userAccountDetails.getSalt());
 
-        final String encryptedPassword = this.userSaltHashingService.generateHashWithSalt(dto.getPassword(), userAuthentication.getUserAccountDetails().getSalt());
-
-        if( !userAuthentication.getUserAccountDetails().getEncryptedPassword().equals(encryptedPassword)) {
+        if (!userAccountDetails.getEncryptedPassword().equals(encryptedPassword)) {
             return new ResponseEntity<>("Invalid password", HttpStatus.BAD_REQUEST);
         }
 
-        final String token = this.tokenService.generateJwtToken(userAuthentication);
+        final String token = this.tokenService.generateJwtToken(userAccountDetails);
         if (token != null) {
             final TokenDTO response = new TokenDTO();
             response.setToken(token);

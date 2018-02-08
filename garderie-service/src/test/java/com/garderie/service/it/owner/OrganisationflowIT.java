@@ -47,7 +47,7 @@ public class OrganisationflowIT extends BaseGarderieITTest{
         Assert.assertEquals(updatedJwtTokenData.getOrgId(), createdOrganistion.getId());
 
         final Organisation updatedOrganisation = new Organisation();
-
+        updatedOrganisation.setId(createdOrganistion.getId());
         final Address orgAddress = new Address();
         orgAddress.setCity("Satara");
         orgAddress.setCountry("India");
@@ -63,7 +63,7 @@ public class OrganisationflowIT extends BaseGarderieITTest{
 
         final HttpEntity updatedHttpEntity = new HttpEntity(updatedOrganisation, updateHttpHeaders);
 
-        final ResponseEntity<GarderieResponse> updateResponseEntity = (ResponseEntity<GarderieResponse>) this.executePutRequest("/garderie/organisation/"+createdOrganistion.getId(), updatedHttpEntity, GarderieResponse.class);
+        final ResponseEntity<GarderieResponse> updateResponseEntity = (ResponseEntity<GarderieResponse>) this.executePutRequest("/garderie/organisation", updatedHttpEntity, GarderieResponse.class);
         final GarderieResponse updatedOrg = updateResponseEntity.getBody();
 
         final String updateOrgString = this.objectMapper.writeValueAsString(updatedOrg.getData().get(0));

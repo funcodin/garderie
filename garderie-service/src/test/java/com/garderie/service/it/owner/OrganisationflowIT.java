@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 
-public class OrganisationflowIT extends BaseGarderieITTest{
+public class OrganisationflowIT extends BaseGarderieITTest {
 
 
     @Autowired
@@ -37,7 +37,7 @@ public class OrganisationflowIT extends BaseGarderieITTest{
 
         final ResponseEntity<GarderieResponse> responseEntity = (ResponseEntity<GarderieResponse>) this.executePostRequest("/garderie/organisation", httpEntity, GarderieResponse.class);
         GarderieResponse updatedTokeResponse = responseEntity.getBody();
-        final String updatedJwtToken = this.objectMapper.writeValueAsString(updatedTokeResponse.getData().get(0));
+        final String updatedJwtToken = this.objectMapper.writeValueAsString(updatedTokeResponse.getData("token"));
         final TokenDTO updatedTokenDTO = this.objectMapper.readValue(updatedJwtToken, TokenDTO.class);
         final JwtTokenData updatedJwtTokenData = this.tokenService.getJwtTokenDataFromJwtToken(updatedTokenDTO.getToken());
 
@@ -57,7 +57,6 @@ public class OrganisationflowIT extends BaseGarderieITTest{
         updatedOrganisation.setOrganisationAddress(orgAddress);
 
 
-
         final HttpHeaders updateHttpHeaders = this.createDefaultHeaders();
         updateHttpHeaders.set("x-auth-token", updatedTokenDTO.getToken());
 
@@ -66,12 +65,10 @@ public class OrganisationflowIT extends BaseGarderieITTest{
         final ResponseEntity<GarderieResponse> updateResponseEntity = (ResponseEntity<GarderieResponse>) this.executePutRequest("/garderie/organisation", updatedHttpEntity, GarderieResponse.class);
         final GarderieResponse updatedOrg = updateResponseEntity.getBody();
 
-        final String updateOrgString = this.objectMapper.writeValueAsString(updatedOrg.getData().get(0));
+        final String updateOrgString = this.objectMapper.writeValueAsString(updatedOrg.getData("token"));
         final Organisation updateOrg = this.objectMapper.readValue(updateOrgString, Organisation.class);
 
         Assert.assertEquals(updateOrg.getOrganisationAddress().getCity(), updatedOrganisation.getOrganisationAddress().getCity());
-
-
 
 
         this.userAccountDetailsService.delete(updatedJwtTokenData.getUserId());

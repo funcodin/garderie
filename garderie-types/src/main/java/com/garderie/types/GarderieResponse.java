@@ -3,11 +3,10 @@ package com.garderie.types;
 
 import org.apache.commons.collections4.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class GarderieResponse<T> {
-    private List<T> data;
+public class GarderieResponse {
+    private Map<String, Object> dataMap;
     private boolean hasErrors;
     private List<String> errors;
     private String nextStep;
@@ -20,11 +19,18 @@ public class GarderieResponse<T> {
         this.nextStep = nextStep;
     }
 
-    public void addData(T t) {
-        if (CollectionUtils.isEmpty(this.data)) {
-            this.data = new ArrayList<>();
+    public void addData(final String key, final Object value) {
+        if(Objects.isNull(this.dataMap)) {
+            this.dataMap = new HashMap<>();
         }
-        this.data.add(t);
+        this.dataMap.put(key, value);
+    }
+
+    public Object getData(final String key) {
+        if(Objects.isNull(this.dataMap)) {
+            return null;
+        }
+        return this.dataMap.get(key);
     }
 
     public void addErrors(String error ){
@@ -34,12 +40,13 @@ public class GarderieResponse<T> {
         this.errors.add(error);
         this.hasErrors = true;
     }
-    public List<T> getData() {
-        return data;
+
+    public Map<String, ?> getDataMap() {
+        return dataMap;
     }
 
-    public void setData(List<T> data) {
-        this.data = data;
+    public void setDataMap(Map<String, Object> dataMap) {
+        this.dataMap = dataMap;
     }
 
     public boolean isHasErrors() {

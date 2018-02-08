@@ -2,8 +2,10 @@ package com.garderie.types.security.auth;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import com.garderie.types.AbstractPersistable;
+import com.garderie.types.security.auth.permissions.ActionPermissions;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -19,6 +21,9 @@ public class UserAccountDetails extends AbstractPersistable implements UserDetai
 	private Boolean accountNonLocked; //will be set to false if payment is not done or else set to true
 	private Boolean credentialsNonExpired; // will be set to false if password tries more than 5 times else true
 	private Date accountExpirationDate; // date when account is set to be expired.
+	private String organisationId;
+	private Set<ActionPermissions> actionPermissions;
+	private String salt;
 
 	public List<Authority> getAuthorities() {
 		return this.authorities;
@@ -101,5 +106,29 @@ public class UserAccountDetails extends AbstractPersistable implements UserDetai
 
 	public void setAccountExpirationDate(final Date accountExpirationDate) {
 		this.accountExpirationDate = accountExpirationDate;
+	}
+
+	public Set<ActionPermissions> getActionPermissions() {
+		return this.actionPermissions;
+	}
+
+	public void setActionPermissions(final Set<ActionPermissions> actionPermissions) {
+		this.actionPermissions = actionPermissions;
+	}
+
+	public String getOrganisationId() {
+		return this.organisationId;
+	}
+
+	public void setOrganisationId(final String organisationId) {
+		this.organisationId = organisationId;
+	}
+
+	public String getSalt() {
+		return this.salt;
+	}
+
+	public void setSalt(final String salt) {
+		this.salt = salt;
 	}
 }

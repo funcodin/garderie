@@ -4,6 +4,8 @@ import com.garderie.service.interfaces.UserAccountDetailsService;
 import com.garderie.service.repository.UserRepository;
 import com.garderie.types.security.auth.Authority;
 import com.garderie.types.security.auth.UserAccountDetails;
+import com.garderie.types.security.auth.permissions.ActionPermissions;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @Service
@@ -65,5 +65,38 @@ public class UserAccountDetailsServiceImpl implements UserAccountDetailsService,
             throw new UsernameNotFoundException("User with username:" + username + " not found");
         }
     }
+
+    @Override
+    public Set<ActionPermissions> getUserActionsByAuthorities(final List<Authority> userAuthorities){
+
+        final Set<ActionPermissions> actionPermissions = new HashSet<>();
+
+        if(CollectionUtils.isEmpty(userAuthorities)) {
+            //TODO throw error
+        }
+
+        if(userAuthorities.contains(Authority.ROLE_OWNER)) {
+            actionPermissions.add(ActionPermissions.ADD_OWNER);
+            actionPermissions.add(ActionPermissions.ADD_ACTIVITY);
+            actionPermissions.add(ActionPermissions.ADD_ORGANISATION);
+            actionPermissions.add(ActionPermissions.ADD_PARENT);
+            actionPermissions.add(ActionPermissions.ADD_TEACHER);
+            actionPermissions.add(ActionPermissions.ADD_PICTURE);
+        }
+
+        if(userAuthorities.contains(Authority.ROLE_PARENT)) {
+            actionPermissions.add(ActionPermissions.VIEW_ACTIVITY);
+            actionPermissions.add(ActionPermissions.VIEW_FEED);
+        }
+
+        if(userAuthorities.contains(Authority.ROLE_TEACHER)) {
+            actionPermissions.add(ActionPermissions.ADD_ACTIVITY);
+            actionPermissions.add(ActionPermissions.ADD_PICTURE);
+        }
+
+        return actionPermissions;
+
+    }
+
 
 }

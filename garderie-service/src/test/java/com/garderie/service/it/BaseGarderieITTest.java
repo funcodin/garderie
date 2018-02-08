@@ -30,12 +30,6 @@ public abstract class BaseGarderieITTest {
     public UserAccountDetailsService userAccountDetailsService;
 
     @Autowired
-    public UserSaltService userSaltService;
-
-    @Autowired
-    public UserPermissionsService userPermissionsService;
-
-    @Autowired
     public TokenService tokenService;
 
     @Autowired

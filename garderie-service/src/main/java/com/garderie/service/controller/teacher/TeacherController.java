@@ -30,7 +30,7 @@ public class TeacherController {
         return response;
     }
 
-    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_PICTURE})
+    @PermissionsCheck(hasPermissions = {ActionPermissions.UPDATE_TEACHER})
     @RequestMapping(method = RequestMethod.PUT)
     public GarderieResponse updateTeacher(@RequestBody final Teacher teacher) {
         final GarderieResponse response = new GarderieResponse();

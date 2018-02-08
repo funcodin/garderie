@@ -85,6 +85,7 @@ public class UserAccountDetailsServiceImpl implements UserAccountDetailsService,
         if(userAuthorities.contains(Authority.ROLE_PARENT)) {
             actionPermissions.add(ActionPermissions.VIEW_ACTIVITY);
             actionPermissions.add(ActionPermissions.VIEW_FEED);
+            actionPermissions.add(ActionPermissions.UPDATE_TEACHER);
         }
 
         if(userAuthorities.contains(Authority.ROLE_TEACHER)) {

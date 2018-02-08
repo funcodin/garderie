@@ -30,25 +30,24 @@ public class TeacherController {
     }
 
     @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_TEACHER})
-    @RequestMapping(method = RequestMethod.PUT, value = "/{teacherId}")
-    public GarderieResponse updateTeacher(@PathVariable String teacherId, @RequestBody final Teacher teacher) {
+    @RequestMapping(method = RequestMethod.PUT)
+    public GarderieResponse updateTeacher(@RequestBody final Teacher teacher) {
         final GarderieResponse response = new GarderieResponse();
         final JwtTokenData jwtTokenData = ControllerUtil.getTokenDataFromHttpRequest();
 
-        response.addData(this.teacherService.update(teacher, teacherId, jwtTokenData));
+        response.addData(this.teacherService.update(teacher, jwtTokenData));
 
         return response;
     }
 
     @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_TEACHER})
     @RequestMapping(method = RequestMethod.DELETE, value = "/{teacherId}")
-    public GarderieResponse deleteTeacher(@PathVariable String teacherId, @RequestBody final Teacher teacher) {
+    public GarderieResponse deleteTeacher(@PathVariable String teacherId) {
         final GarderieResponse response = new GarderieResponse();
         final JwtTokenData jwtTokenData = ControllerUtil.getTokenDataFromHttpRequest();
 
         //TODO delete teacher
-        //response.addData(this.teacherService.update(teacher, teacherId));
-
+        this.teacherService.deletedTeacherByid(teacherId, jwtTokenData);
         return response;
     }
 }

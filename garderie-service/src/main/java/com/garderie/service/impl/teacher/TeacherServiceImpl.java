@@ -67,20 +67,21 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Teacher update(final Teacher teacher, final String teacherId, final JwtTokenData jwtTokenData) {
+    public Teacher update(final Teacher teacher, final JwtTokenData jwtTokenData) {
 
-        if (StringUtils.isBlank(teacherId)) {
+        if (Objects.isNull(teacher) || StringUtils.isBlank(teacher.getId())) {
             throw new ServiceException("Teacher id cannot be empty", HttpStatus.BAD_REQUEST);
         }
-        if (Objects.isNull(teacher)) {
-            throw new ServiceException("Teacher cannot be empty", HttpStatus.BAD_REQUEST);
-        }
 
-        if(!teacherId.equals(jwtTokenData.getUserId())){
+        if(!teacher.getId().equals(jwtTokenData.getUserId())){
             throw new ServiceException("Teacher profile can be updated by profile owner", HttpStatus.BAD_REQUEST);
         }
 
-        final Teacher existingTeacher = this.teacherRepository.findTeacherById(teacherId);
+        final Teacher existingTeacher = this.teacherRepository.findTeacherById(teacher.getId());
+
+        if(Objects.isNull(existingTeacher)) {
+            throw new ServiceException("Unable to find teacher profile", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
         if(StringUtils.isNotBlank(teacher.getFirstName())) {
             existingTeacher.setFirstName(teacher.getFirstName());
@@ -120,4 +121,8 @@ public class TeacherServiceImpl implements TeacherService {
         return this.teacherRepository.findTeacherById(teacherId);
     }
 
+    @Override
+    public void deletedTeacherByid(String teacherId, JwtTokenData jwtTokenData) {
+        this.teacherRepository.delete(teacherId);
+    }
 }

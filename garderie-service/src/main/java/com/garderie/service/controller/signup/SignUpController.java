@@ -48,7 +48,7 @@ public class SignUpController {
         this.validateSignUpRequest(signUpDTO);
         this.signUpService.signUpOwner(signUpDTO);
         //TODO change adding singupdto to response to something else
-        response.addData(signUpDTO);
+        response.addData("signUp",signUpDTO);
         return response;
     }
 
@@ -88,7 +88,7 @@ public class SignUpController {
         final TokenDTO tokenDTO = new TokenDTO();
         tokenDTO.setToken(token);
 
-        response.addData(tokenDTO);
+        response.addData("token", tokenDTO);
         return response;
     }
 

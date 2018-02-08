@@ -57,7 +57,7 @@ public class OrganisationController {
         final String updatedToken = this.tokenService.generateJwtTokenByEmailId(jwtTokenData.getUserName());
         final TokenDTO tokenDTO = new TokenDTO();
         tokenDTO.setToken(updatedToken);
-        response.addData(tokenDTO);
+        response.addData("token",tokenDTO);
 
         if (Objects.isNull(createdOrganisation.getOrganisationAddress())) {
             response.setNextStep("ORG_ADDRESS_INFO");
@@ -74,7 +74,7 @@ public class OrganisationController {
         final GarderieResponse response = new GarderieResponse();
         final JwtTokenData jwtTokenData = ControllerUtil.getTokenDataFromHttpRequest();
         final Organisation updatedOrganisation = this.organisationService.update(organisation, jwtTokenData);
-        response.addData(updatedOrganisation);
+        response.addData("organisation",updatedOrganisation);
         return response;
     }
 

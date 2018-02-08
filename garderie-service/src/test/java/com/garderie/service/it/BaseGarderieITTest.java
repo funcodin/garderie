@@ -38,19 +38,19 @@ public abstract class BaseGarderieITTest {
 
     private TestRestTemplate restTemplate = new TestRestTemplate();
 
-     public ObjectMapper objectMapper = new ObjectMapper();
+    public ObjectMapper objectMapper = new ObjectMapper();
 
     public ResponseEntity<?> executeGetRequest(final String endpoint, final HttpHeaders httpHeaders, final Class responseClass) {
         HttpEntity<?> entity = new HttpEntity<>(null, httpHeaders);
         ResponseEntity<?> response = restTemplate.exchange(
                 createURLWithPort(endpoint),
                 HttpMethod.GET, entity, responseClass);
-        return  response;
+        return response;
 
     }
 
 
-    public ResponseEntity<?>  executePostRequest(final String endpoint, final HttpEntity httpEntity, final Class responseCLass) {
+    public ResponseEntity<?> executePostRequest(final String endpoint, final HttpEntity httpEntity, final Class responseCLass) {
 
         final ResponseEntity<?> response = restTemplate.exchange(
                 createURLWithPort(endpoint),
@@ -61,7 +61,7 @@ public abstract class BaseGarderieITTest {
     }
 
 
-    public ResponseEntity<?>  executePutRequest(final String endpoint, final HttpEntity httpEntity, final Class responseCLass) {
+    public ResponseEntity<?> executePutRequest(final String endpoint, final HttpEntity httpEntity, final Class responseCLass) {
 
         final ResponseEntity<?> response = restTemplate.exchange(
                 createURLWithPort(endpoint),
@@ -75,11 +75,11 @@ public abstract class BaseGarderieITTest {
         return "http://localhost:" + port + uri;
     }
 
-    public HttpHeaders createDefaultHeaders(){
-       final HttpHeaders httpHeaders = new HttpHeaders();
-       httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-       httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-       return httpHeaders;
+    public HttpHeaders createDefaultHeaders() {
+        final HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        return httpHeaders;
     }
 
 
@@ -104,7 +104,7 @@ public abstract class BaseGarderieITTest {
         httpEntity = new HttpEntity(signUpDTO, this.createDefaultHeaders());
         responseEntity = (ResponseEntity<GarderieResponse>) this.executePostRequest("/garderie/api/signup/code", httpEntity, GarderieResponse.class);
         GarderieResponse tokenresponse = responseEntity.getBody();
-        String stringresponse = this.objectMapper.writeValueAsString(tokenresponse.getData().get(0));
+        String stringresponse = this.objectMapper.writeValueAsString(tokenresponse.getData("token"));
         TokenDTO tokenDTO = this.objectMapper.readValue(stringresponse, TokenDTO.class);
         return tokenDTO;
 

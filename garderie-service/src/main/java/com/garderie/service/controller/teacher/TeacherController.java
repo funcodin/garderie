@@ -24,7 +24,8 @@ public class TeacherController {
         final GarderieResponse response = new GarderieResponse();
         final JwtTokenData jwtTokenData = ControllerUtil.getTokenDataFromHttpRequest();
 
-        response.addData(this.teacherService.create(teacher, jwtTokenData));
+        //TODO update this
+        response.addData("teacher",this.teacherService.create(teacher, jwtTokenData));
 
         return response;
     }
@@ -35,7 +36,8 @@ public class TeacherController {
         final GarderieResponse response = new GarderieResponse();
         final JwtTokenData jwtTokenData = ControllerUtil.getTokenDataFromHttpRequest();
 
-        response.addData(this.teacherService.update(teacher, jwtTokenData));
+        //TODO update this
+        response.addData("teacher",this.teacherService.update(teacher, jwtTokenData));
 
         return response;
     }

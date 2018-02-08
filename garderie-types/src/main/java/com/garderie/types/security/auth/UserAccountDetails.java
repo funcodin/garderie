@@ -23,6 +23,7 @@ public class UserAccountDetails extends AbstractPersistable implements UserDetai
 	private Date accountExpirationDate; // date when account is set to be expired.
 	private String organisationId;
 	private Set<ActionPermissions> actionPermissions;
+	private String salt;
 
 	public List<Authority> getAuthorities() {
 		return this.authorities;
@@ -121,5 +122,13 @@ public class UserAccountDetails extends AbstractPersistable implements UserDetai
 
 	public void setOrganisationId(final String organisationId) {
 		this.organisationId = organisationId;
+	}
+
+	public String getSalt() {
+		return this.salt;
+	}
+
+	public void setSalt(final String salt) {
+		this.salt = salt;
 	}
 }

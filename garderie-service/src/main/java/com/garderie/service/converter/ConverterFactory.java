@@ -1,16 +1,11 @@
 package com.garderie.service.converter;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.PostConstruct;
-
-import com.garderie.types.dto.SignUpDTO;
-import com.garderie.types.security.auth.UserSalt;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import com.garderie.service.dto.UserDTO;
+import javax.annotation.PostConstruct;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class ConverterFactory {
@@ -26,7 +21,6 @@ public class ConverterFactory {
         this.converters = new HashMap<>();
         this.converters.put("USER_DTO", new UserDTOConverter());
         this.converters.put("ORG_OWNER", new OrgOwnerUserDTOConverter());
-        this.converters.put("USER_SALT", new UserSaltConverter());
         this.converters.put("PARENT", new ParentUserDTOConverter());
         this.converters.put("TEACHER", new TeacherUserDTOConverter());
     }

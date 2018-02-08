@@ -7,11 +7,11 @@ import com.garderie.types.dto.SignUpDTO;
 import com.garderie.types.org.OrgOwner;
 import com.garderie.types.security.auth.UserAccountDetails;
 import com.garderie.types.security.auth.UserAuthentication;
-import com.garderie.types.security.auth.UserSalt;
 import com.garderie.types.security.auth.permissions.ActionPermissions;
 import com.garderie.types.security.auth.token.JwtTokenData;
 import com.garderie.types.user.types.Teacher;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,9 +21,6 @@ import java.util.Set;
 
 @Service
 public class SignUpServiceImpl implements SignUpService {
-
-    @Autowired
-    private UserSaltService userSaltService;
 
     @Autowired
     private ConverterFactory converterFactory;
@@ -83,9 +80,10 @@ public class SignUpServiceImpl implements SignUpService {
     }
 
     private UserAccountDetails signUpUser(final SignUpDTO signUpDTO, final String userType, final String orgId) {
-        final UserSalt userSaltCheck = this.userSaltService.findByEmailId(signUpDTO.getEmailId());
 
-        if (Objects.nonNull(userSaltCheck)) {
+        final UserAccountDetails accountDetails = this.userAccountDetailsService.findByEmailId(signUpDTO.getEmailId());
+
+        if(Objects.nonNull(accountDetails)) {
             throw new ServiceException("Email already taken", HttpStatus.BAD_REQUEST);
         }
 
@@ -111,7 +109,7 @@ public class SignUpServiceImpl implements SignUpService {
             throw new ServiceException("User does not exists");
         }
 
-        if (userAccountDetails.isEnabled()) {
+        if (userAccountDetails.isEnabled() || StringUtils.isNotBlank(userAccountDetails.getSalt())) {
             throw new ServiceException("User already active", HttpStatus.BAD_REQUEST);
         }
 
@@ -120,30 +118,19 @@ public class SignUpServiceImpl implements SignUpService {
         }
 
 
-        final UserSalt userSaltCheck = this.userSaltService.findByEmailId(signUpDTO.getEmailId());
-
-        if (Objects.nonNull(userSaltCheck)) {
-            throw new ServiceException("Email already taken", HttpStatus.BAD_REQUEST);
-        }
-
-        final UserSalt userSalt = (UserSalt) this.converterFactory.getConverter("USER_SALT").convert(signUpDTO);
 
         final String salt = this.userSaltHashingService.generateSalt();
-        userSalt.setId(userAccountDetails.getId());
-        userSalt.setSalt(salt);
 
-        final UserSalt createdUserSalt = this.userSaltService.create(userSalt);
         final String encryptedPassword = this.userSaltHashingService.generateHashWithSalt(signUpDTO.getPassword(), salt);
 
         userAccountDetails.setEncryptedPassword(encryptedPassword);
         userAccountDetails.setActive(true);
+        userAccountDetails.setSalt(salt);
 
         final UserAccountDetails updatedUserAccountDetails = this.userAccountDetailsService.update(userAccountDetails);
 
-
         final UserAuthentication userAuthentication = new UserAuthentication();
         userAuthentication.setUserAccountDetails(updatedUserAccountDetails);
-        userAuthentication.setUserSalt(createdUserSalt);
 
         return userAuthentication;
     }

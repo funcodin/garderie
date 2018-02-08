@@ -56,8 +56,7 @@ public class SignupflowIT extends BaseGarderieITTest {
         Assert.assertNotNull(tokenDTO);
 
         this.userAccountDetailsService.delete(userAccountDetails.getId());
-        this.userSaltService.deleteByEmailId(userAccountDetails.getEmailId());
-
+        this.orgOwnerService.deleteByOrgOwnerId(userAccountDetails.getId());
     }
 
 

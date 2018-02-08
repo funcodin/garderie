@@ -55,13 +55,6 @@ public class JsonWebTokenService implements TokenService {
         return this.generateJwtToken(userAccountDetails);
     }
 
-    //TODO REMOVE THIS METHOD IF NOT USED
-    public List<ActionPermissions> getActionPermissionFromJwtToken(final String jwtToken) {
-        final Jws<Claims> jwsClaims = this.parseToken(jwtToken);
-        JwtTokenData jwtTokenData = this.getUserRequestAuthenticationFromToken(jwsClaims);
-        return jwtTokenData.getActionPermissions();
-    }
-
     @Override
     public JwtTokenData getJwtTokenDataFromJwtToken(final String jwtToken) {
         final Jws<Claims> jwsClaims = this.parseToken(jwtToken);

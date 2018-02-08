@@ -39,8 +39,8 @@ public class JsonWebTokenService implements TokenService {
         jwtToken.put("username", userAuthentication.getUserAccountDetails().getUsername());
         //tokenData.put("token_create_date", LocalDateTime.now());
         jwtToken.put("user_role", userAuthentication.getUserAccountDetails().getAuthorities());
-        jwtToken.put("user_permissions", userAuthentication.getUserPermissions().getActionPermissions());
-        jwtToken.put("org_id", userAuthentication.getUserPermissions().getOrganisationId());
+        jwtToken.put("user_permissions", userAuthentication.getUserAccountDetails().getActionPermissions());
+        jwtToken.put("org_id", userAuthentication.getUserAccountDetails().getOrganisationId());
         JwtBuilder jwtBuilder = Jwts.builder();
         Instant instant = LocalDateTime.now().toInstant(ZoneOffset.UTC);
         jwtBuilder.setExpiration(Date.from(instant));

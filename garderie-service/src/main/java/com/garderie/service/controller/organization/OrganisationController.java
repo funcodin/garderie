@@ -14,7 +14,6 @@ import com.garderie.types.GarderieResponse;
 import com.garderie.types.org.Organisation;
 import com.garderie.types.security.auth.permissions.ActionPermissions;
 import com.garderie.types.security.auth.token.JwtTokenData;
-import com.garderie.types.user.info.Address;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,9 +31,6 @@ public class OrganisationController {
 
     @Autowired
     private OrgOwnerValidator orgOwnerValidator;
-
-    @Autowired
-    private OrganisationAddressValidator organisationAddressValidator;
 
     @Autowired
     private OrganisationService organisationService;

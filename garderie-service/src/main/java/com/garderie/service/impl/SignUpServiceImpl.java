@@ -9,7 +9,6 @@ import com.garderie.types.security.auth.UserAccountDetails;
 import com.garderie.types.security.auth.UserAuthentication;
 import com.garderie.types.security.auth.UserSalt;
 import com.garderie.types.security.auth.permissions.ActionPermissions;
-import com.garderie.types.security.auth.permissions.UserPermissions;
 import com.garderie.types.security.auth.token.JwtTokenData;
 import com.garderie.types.user.types.Teacher;
 import org.apache.commons.collections4.CollectionUtils;
@@ -34,9 +33,6 @@ public class SignUpServiceImpl implements SignUpService {
 
     @Autowired
     private UserSaltHashingService userSaltHashingService;
-
-    @Autowired
-    private UserPermissionsService userPermissionsService;
 
     @Autowired
     private TeacherService teacherService;
@@ -95,19 +91,15 @@ public class SignUpServiceImpl implements SignUpService {
 
         final UserAccountDetails userAccountDetails = (UserAccountDetails) this.converterFactory.getConverter(userType).convert(signUpDTO);
 
-        final UserAccountDetails createdUserAccountDetails = this.userAccountDetailsService.create(userAccountDetails);
+        final Set<ActionPermissions> actionPermissions = this.userAccountDetailsService.getUserActionsByAuthorities(userAccountDetails.getAuthorities());
 
-        final Set<ActionPermissions> actionPermissions = this.userPermissionsService.getUserActionsByUserAuth(createdUserAccountDetails);
-        if (CollectionUtils.isEmpty(actionPermissions)) {
+        if(CollectionUtils.isEmpty(actionPermissions)) {
             throw new ServiceException("Cannot find action permission for authority", HttpStatus.INTERNAL_SERVER_ERROR);
-            //this means we dont have mapping for authority to permissions
         }
-        final UserPermissions userPermissions = new UserPermissions();
-        userPermissions.setId(createdUserAccountDetails.getId());
-        userPermissions.setEmailId(userAccountDetails.getEmailId());
-        userPermissions.setActionPermissions(actionPermissions);
-        userPermissions.setOrganisationId(orgId);
-        this.userPermissionsService.create(userPermissions);
+
+        userAccountDetails.setActionPermissions(actionPermissions);
+
+        final UserAccountDetails createdUserAccountDetails = this.userAccountDetailsService.create(userAccountDetails);
 
         return createdUserAccountDetails;
     }
@@ -127,12 +119,6 @@ public class SignUpServiceImpl implements SignUpService {
             throw new ServiceException("Invalid code", HttpStatus.BAD_REQUEST);
         }
 
-
-        final UserPermissions userPermissions = this.userPermissionsService.findByEmailId(signUpDTO.getEmailId());
-
-        if(Objects.isNull(userPermissions)){
-            throw new ServiceException("Unable to assign user permissions",HttpStatus.BAD_REQUEST);
-        }
 
         final UserSalt userSaltCheck = this.userSaltService.findByEmailId(signUpDTO.getEmailId());
 
@@ -157,7 +143,6 @@ public class SignUpServiceImpl implements SignUpService {
 
         final UserAuthentication userAuthentication = new UserAuthentication();
         userAuthentication.setUserAccountDetails(updatedUserAccountDetails);
-        userAuthentication.setUserPermissions(userPermissions);
         userAuthentication.setUserSalt(createdUserSalt);
 
         return userAuthentication;

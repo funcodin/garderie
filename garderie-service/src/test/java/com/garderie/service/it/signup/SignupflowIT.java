@@ -57,7 +57,6 @@ public class SignupflowIT extends BaseGarderieITTest {
 
         this.userAccountDetailsService.delete(userAccountDetails.getId());
         this.userSaltService.deleteByEmailId(userAccountDetails.getEmailId());
-        this.userPermissionsService.deleteByEmailId(userAccountDetails.getEmailId());
 
     }
 

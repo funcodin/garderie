@@ -1,13 +1,11 @@
 package com.garderie.service.impl.account;
 
 import com.garderie.service.interfaces.UserAccountDetailsService;
-import com.garderie.service.repository.UserRepository;
+import com.garderie.service.repository.UserAccountDetailsRepository;
 import com.garderie.types.security.auth.Authority;
 import com.garderie.types.security.auth.UserAccountDetails;
 import com.garderie.types.security.auth.permissions.ActionPermissions;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,7 +19,7 @@ import java.util.*;
 public class UserAccountDetailsServiceImpl implements UserAccountDetailsService, UserDetailsService {
 
     @Autowired
-    private  UserRepository repository;
+    private UserAccountDetailsRepository repository;
 
     @Override
     public UserAccountDetails create(final UserAccountDetails user) {

@@ -56,7 +56,6 @@ public class OrganisationServiceImpl implements OrganisationService {
 
         //set user permissions with
         userAccountDetails.setOrganisationId(createdOrganisation.getId());
-        userAccountDetails.setOrganisationId(createdOrganisation.getId());
         this.userAccountDetailsService.update(userAccountDetails);
 
 
@@ -74,17 +73,17 @@ public class OrganisationServiceImpl implements OrganisationService {
     }
 
     @Override
-    public Organisation update(final Organisation organisation, final String orgId, final JwtTokenData jwtTokenData) {
+    public Organisation update(final Organisation organisation, final JwtTokenData jwtTokenData) {
 
-        if (StringUtils.isBlank(orgId)) {
-            throw new ServiceException("Organisation id cannot be empty for update.", HttpStatus.BAD_REQUEST);
+        if (Objects.isNull(organisation) || StringUtils.isBlank(organisation.getId())) {
+            throw new ServiceException("Organisation id is required for update.", HttpStatus.BAD_REQUEST);
         }
 
-        if (!orgId.equals(jwtTokenData.getOrgId())) {
+        if (!organisation.getId().equals(jwtTokenData.getOrgId())) {
             throw new ServiceException("Organisation can be updated by org owner only", HttpStatus.BAD_REQUEST);
         }
 
-        final Organisation existingOrganisation = this.organisationRepository.findById(orgId);
+        final Organisation existingOrganisation = this.organisationRepository.findById(organisation.getId());
 
         if (StringUtils.isNotBlank(organisation.getOrgName())) {
             existingOrganisation.setOrgName(organisation.getOrgName());

@@ -49,9 +49,9 @@ public class OrganisationController {
         if (CollectionUtils.isNotEmpty(validationErrors)) {
             throw new ServiceException(validationErrors.toString(), HttpStatus.BAD_REQUEST);
         }
-
         final Organisation createdOrganisation = this.organisationService.create(organisation, jwtTokenData);
         //response.addData(createdOrganisation);
+
 
 
         final String updatedToken = this.tokenService.generateJwtTokenByEmailId(jwtTokenData.getUserName());
@@ -69,11 +69,11 @@ public class OrganisationController {
     }
 
     @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_ORGANISATION})
-    @RequestMapping(method = RequestMethod.PUT, value = "/{orgId}")
-    public GarderieResponse updateOrganisation(@PathVariable final String orgId, @RequestBody final Organisation organisation) {
+    @RequestMapping(method = RequestMethod.PUT)
+    public GarderieResponse updateOrganisation( @RequestBody final Organisation organisation) {
         final GarderieResponse response = new GarderieResponse();
         final JwtTokenData jwtTokenData = ControllerUtil.getTokenDataFromHttpRequest();
-        final Organisation updatedOrganisation = this.organisationService.update(organisation, orgId, jwtTokenData);
+        final Organisation updatedOrganisation = this.organisationService.update(organisation, jwtTokenData);
         response.addData(updatedOrganisation);
         return response;
     }

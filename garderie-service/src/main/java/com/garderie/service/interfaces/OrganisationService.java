@@ -7,7 +7,7 @@ public interface OrganisationService {
 
     public Organisation create(final Organisation organisation, final JwtTokenData jwtTokenData);
 
-    public Organisation update(final Organisation organisation, final String orgId, final JwtTokenData jwtTokenData);
+    public Organisation update(final Organisation organisation, final JwtTokenData jwtTokenData);
 
     public Organisation findOrganisationById(final String id);
 

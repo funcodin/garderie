@@ -109,4 +109,9 @@ public class OrganisationServiceImpl implements OrganisationService {
     public void deletedById(String id) {
         this.organisationRepository.delete(id);
     }
+
+    @Override
+    public Organisation findOrganisationByOwnerId(String ownerId) {
+        return this.organisationRepository.findByOrgOwnerId(ownerId);
+    }
 }

@@ -1,12 +1,12 @@
 package com.garderie.service.controller.child;
 
+import com.garderie.service.aop.PermissionsCheck;
 import com.garderie.service.interfaces.ChildService;
+import com.garderie.types.GarderieResponse;
+import com.garderie.types.security.auth.permissions.ActionPermissions;
 import com.garderie.types.user.types.Child;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/child")
@@ -15,12 +15,27 @@ public class ChildController {
     @Autowired
     private ChildService childService;
 
+    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_CHILD})
     @RequestMapping(method = RequestMethod.POST)
-    public Child register(@RequestBody final Child child){
-        return this.childService.create(child);
+    public  GarderieResponse register(@RequestBody final Child child){
+        GarderieResponse garderieResponse = new GarderieResponse();
+        garderieResponse.addData("child", this.childService.create(child));
+        return garderieResponse;
     }
 
+    @PermissionsCheck(hasPermissions = {ActionPermissions.UPDATE_CHILD})
+    @RequestMapping(method = RequestMethod.PUT)
+    public GarderieResponse updateChild(@RequestBody final Child child) {
+        final GarderieResponse response = new GarderieResponse();
+        response.addData("child", this.childService.update(child));
+        return response;
+    }
 
+    @PermissionsCheck(hasPermissions = {ActionPermissions.UPDATE_CHILD})
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{childId}")
+    public void deleteChildById(@PathVariable final String childId) {
+        this.childService.deleteChildById(childId);
+    }
 
 
 }

@@ -85,10 +85,6 @@ public class BaseInfoTest {
 
     public Doctor createDoctor() {
         final Doctor doctor = new Doctor();
-        doctor.setId(UUID.randomUUID().toString());
-        doctor.setCreatedDate(new Date());
-        doctor.setModifiedDate(new Date());
-        doctor.setAddress(this.createAddress());
         doctor.setContactDetails(this.createContactDetails());
         doctor.setDoctorType(DoctorType.GENERAL);
         doctor.setFirstName("Ashok");
@@ -130,20 +126,10 @@ public class BaseInfoTest {
 
     public Child createChild() {
         final Child child = new Child();
-        child.setId(UUID.randomUUID().toString());
-        child.setCreatedDate(new Date());
-        child.setModifiedDate(new Date());
         child.setFirstName("Kid");
-        child.setMiddleName("A");
         child.setLastName("R");
         child.setOrgId("1233");
 
-        final List<EmergencyContact> emergencyContacts = new ArrayList<>();
-        emergencyContacts.add(this.createEmergencyContact());
-        child.setEmergencyContacts(emergencyContacts);
-        final List<Parent> parents = new ArrayList<>();
-        parents.add(this.createParent());
-        child.setParents(parents);
         child.setMedicalInformation(this.createMedicalInformation());
         return child;
 

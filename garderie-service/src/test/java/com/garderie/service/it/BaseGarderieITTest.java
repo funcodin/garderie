@@ -35,6 +35,9 @@ public abstract class BaseGarderieITTest {
     @Autowired
     public OrgOwnerService orgOwnerService;
 
+    @Autowired
+    public OrganisationService organisationService;
+
 
     private TestRestTemplate restTemplate = new TestRestTemplate();
 

@@ -11,6 +11,8 @@ public interface OrganisationService {
 
     public Organisation findOrganisationById(final String id);
 
+    public Organisation findOrganisationByOwnerId(final String ownerId);
+
     public void deletedById(final String id);
 
 }

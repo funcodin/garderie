@@ -14,7 +14,9 @@ public enum ActionPermissions {
     ADD_ACTIVITY,
     ADD_PICTURE,
     VIEW_ACTIVITY,
-    VIEW_FEED;
+    VIEW_FEED,
+    ADD_CHILD,
+    UPDATE_CHILD;
 
 
 }

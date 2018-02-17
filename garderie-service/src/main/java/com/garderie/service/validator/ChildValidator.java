@@ -37,28 +37,7 @@ public class ChildValidator extends AbstractValidator implements Validator<Child
         if(StringUtils.isBlank(child.getLastName()))
             errors.add(GarderieErrors.MISSING_CHILD_LAST_NAME);
 
-        if(CollectionUtils.isEmpty(child.getEmergencyContacts())) {
-            errors.add(GarderieErrors.MISSING_EMERGENCY_CONTACT);
-        } else {
 
-            for(final EmergencyContact emergencyContact : child.getEmergencyContacts()) {
-
-                this.setDefaultValues(emergencyContact);
-
-                if( StringUtils.isBlank( emergencyContact.getFirstName()))
-                    errors.add(GarderieErrors.MISSING_EMERGENCY_FIRST_NAME);
-
-                if(StringUtils.isBlank(emergencyContact.getLastName()))
-                    errors.add(GarderieErrors.MISSING_EMERGENCY_LAST_NAME);
-
-                if(StringUtils.isBlank(emergencyContact.getCellPhone()))
-                    errors.add(GarderieErrors.MISSING_EMERGENCY_CELLPHONE);
-
-                if(Objects.isNull(emergencyContact.getRelationshipToChild()))
-                    errors.add(GarderieErrors.MISSING_EMERGENCY_RELATIONSHIP);
-
-            }
-        }
 
 
         if(Objects.isNull(child.getMedicalInformation())){
@@ -75,7 +54,6 @@ public class ChildValidator extends AbstractValidator implements Validator<Child
                 errors.add(GarderieErrors.MISSING_DOCTOR_INFO);
             }else{
                 for(final Doctor doctor : medicalInformation.getDoctors()) {
-                    this.setDefaultValues(doctor);
 
                     if(StringUtils.isBlank(doctor.getLastName()))
                         errors.add(GarderieErrors.MISSING_DOCTOR_LAST_NAME);
@@ -88,13 +66,6 @@ public class ChildValidator extends AbstractValidator implements Validator<Child
                     }
                 }
             }
-        }
-
-        if( CollectionUtils.isEmpty(child.getParents())) {
-            errors.add(GarderieErrors.MISSING_PARENTS_INFO);
-        }else{
-            for(Parent parent : child.getParents())
-                errors.addAll(this.parentValidator.validatePreSave(parent));
         }
 
         return errors;

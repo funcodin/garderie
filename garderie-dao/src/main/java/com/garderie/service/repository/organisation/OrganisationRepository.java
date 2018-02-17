@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface OrganisationRepository extends MongoRepository<Organisation, String> {
 
     public Organisation findById(final String id);
+    public Organisation findByOrgOwnerId(final String ownerId);
 
 }

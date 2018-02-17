@@ -1,12 +1,9 @@
 package com.garderie.types.user.info;
 
-import com.garderie.types.AbstractPersistable;
-
-public class Doctor extends AbstractPersistable{
+public class Doctor {
 	private String firstName;
 	private String middleName;
 	private String lastName;
-	private Address address;
 	private ContactDetails contactDetails;
 	private DoctorType doctorType;
 	
@@ -27,12 +24,6 @@ public class Doctor extends AbstractPersistable{
 	}
 	public void setLastName(final String lastName) {
 		this.lastName = lastName;
-	}
-	public Address getAddress() {
-		return this.address;
-	}
-	public void setAddress(final Address address) {
-		this.address = address;
 	}
 	public ContactDetails getContactDetails() {
 		return this.contactDetails;

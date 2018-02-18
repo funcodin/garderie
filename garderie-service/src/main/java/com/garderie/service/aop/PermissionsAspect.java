@@ -2,6 +2,7 @@ package com.garderie.service.aop;
 
 import com.garderie.service.exception.model.ServiceException;
 import com.garderie.service.interfaces.TokenService;
+import com.garderie.types.security.auth.Authority;
 import com.garderie.types.security.auth.permissions.ActionPermissions;
 import com.garderie.types.security.auth.token.JwtTokenData;
 import com.garderie.types.security.consts.SecurityConsts;
@@ -39,6 +40,7 @@ public class PermissionsAspect {
         final Method method = methodSignature.getMethod();
         final PermissionsCheck securityCheck = method.getAnnotation(PermissionsCheck.class);
         final List<ActionPermissions> actionPermissions = Arrays.asList(securityCheck.hasPermissions());
+        final List<Authority> authorities = Arrays.asList(securityCheck.hasAuthority());
         final HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         final String token = httpServletRequest.getHeader(SecurityConsts.AUTH_HEADER_NAME);
 
@@ -48,20 +50,35 @@ public class PermissionsAspect {
         httpServletRequest.setAttribute(SecurityConsts.JWT_TOKEN_DATA, jwtTokenData);
 
 
-        final List<ActionPermissions> actionPermissionsFromToken = jwtTokenData.getActionPermissions();
+        final List<Authority> authoritiesFromToken = jwtTokenData.getAuthorities();
         boolean authPassed = false;
-        for(ActionPermissions actionPermission : actionPermissions ){
-            if(actionPermissionsFromToken.contains(actionPermission.name())){
-               authPassed = true;
-               break;
+
+        for(Authority authority : authorities) {
+            if(authoritiesFromToken.contains(authority.name())) {
+                authPassed = true;
+                break;
             }
         }
 
         if(authPassed){
-            LOGGER.info("Auth passed");
+            LOGGER.info("User has authority to perfom this operation");
         }else{
-            throw new ServiceException("UnAuthorized", HttpStatus.FORBIDDEN);
+            throw new ServiceException("User unauthorized to perform this operation", HttpStatus.UNAUTHORIZED);
         }
 
+        final List<ActionPermissions> actionPermissionsFromToken = jwtTokenData.getActionPermissions();
+        boolean hasPermission = false;
+        for(ActionPermissions actionPermission : actionPermissions ){
+            if(actionPermissionsFromToken.contains(actionPermission.name())){
+                hasPermission = true;
+               break;
+            }
+        }
+
+        if(hasPermission){
+            LOGGER.info("User has permissions");
+        }else{
+            throw new ServiceException("User does not have permisssion to perform this operation", HttpStatus.FORBIDDEN);
+        }
     }
 }

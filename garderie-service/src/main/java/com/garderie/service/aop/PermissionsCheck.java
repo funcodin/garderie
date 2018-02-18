@@ -1,5 +1,6 @@
 package com.garderie.service.aop;
 
+import com.garderie.types.security.auth.Authority;
 import com.garderie.types.security.auth.permissions.ActionPermissions;
 
 import java.lang.annotation.ElementType;
@@ -11,4 +12,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PermissionsCheck {
     ActionPermissions[] hasPermissions();
+    Authority[] hasAuthority();
 }

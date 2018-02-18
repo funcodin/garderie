@@ -12,6 +12,7 @@ import com.garderie.service.validator.OrganisationValidator;
 import com.garderie.service.validator.org.OrganisationAddressValidator;
 import com.garderie.types.GarderieResponse;
 import com.garderie.types.org.Organisation;
+import com.garderie.types.security.auth.Authority;
 import com.garderie.types.security.auth.permissions.ActionPermissions;
 import com.garderie.types.security.auth.token.JwtTokenData;
 import org.apache.commons.collections4.CollectionUtils;
@@ -38,7 +39,7 @@ public class OrganisationController {
     @Autowired
     private TokenService tokenService;
 
-    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_ORGANISATION})
+    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_ORGANISATION}, hasAuthority = {Authority.ROLE_OWNER})
     @RequestMapping(method = RequestMethod.POST)
     public GarderieResponse createOrganisation(@RequestBody final Organisation organisation) {
         final GarderieResponse response = new GarderieResponse();
@@ -68,7 +69,7 @@ public class OrganisationController {
         return response;
     }
 
-    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_ORGANISATION})
+    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_ORGANISATION}, hasAuthority = {Authority.ROLE_OWNER})
     @RequestMapping(method = RequestMethod.PUT)
     public GarderieResponse updateOrganisation( @RequestBody final Organisation organisation) {
         final GarderieResponse response = new GarderieResponse();

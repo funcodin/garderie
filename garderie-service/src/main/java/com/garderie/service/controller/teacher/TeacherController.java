@@ -4,6 +4,7 @@ import com.garderie.service.aop.PermissionsCheck;
 import com.garderie.service.interfaces.TeacherService;
 import com.garderie.service.util.ControllerUtil;
 import com.garderie.types.GarderieResponse;
+import com.garderie.types.security.auth.Authority;
 import com.garderie.types.security.auth.permissions.ActionPermissions;
 import com.garderie.types.security.auth.token.JwtTokenData;
 import com.garderie.types.user.types.Teacher;
@@ -18,7 +19,7 @@ public class TeacherController {
     @Autowired
     private TeacherService teacherService;
 
-    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_TEACHER})
+    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_TEACHER}, hasAuthority = {Authority.ROLE_OWNER})
     @RequestMapping(method = RequestMethod.POST)
     public GarderieResponse createTeacher(@RequestBody final Teacher teacher) {
         final GarderieResponse response = new GarderieResponse();
@@ -30,7 +31,7 @@ public class TeacherController {
         return response;
     }
 
-    @PermissionsCheck(hasPermissions = {ActionPermissions.UPDATE_TEACHER})
+    @PermissionsCheck(hasPermissions = {ActionPermissions.UPDATE_TEACHER}, hasAuthority = {Authority.ROLE_OWNER,Authority.ROLE_TEACHER})
     @RequestMapping(method = RequestMethod.PUT)
     public GarderieResponse updateTeacher(@RequestBody final Teacher teacher) {
         final GarderieResponse response = new GarderieResponse();
@@ -42,7 +43,7 @@ public class TeacherController {
         return response;
     }
 
-    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_PICTURE})
+    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_PICTURE}, hasAuthority = {Authority.ROLE_OWNER,Authority.ROLE_TEACHER})
     @RequestMapping(method = RequestMethod.DELETE, value = "/{teacherId}")
     public GarderieResponse deleteTeacher(@PathVariable String teacherId) {
         final GarderieResponse response = new GarderieResponse();

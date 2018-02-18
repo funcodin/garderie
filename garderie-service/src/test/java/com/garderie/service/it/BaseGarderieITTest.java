@@ -6,7 +6,9 @@ import com.garderie.service.dto.TokenDTO;
 import com.garderie.service.interfaces.*;
 import com.garderie.types.GarderieResponse;
 import com.garderie.types.dto.SignUpDTO;
+import com.garderie.types.org.Organisation;
 import com.garderie.types.security.auth.UserAccountDetails;
+import com.garderie.types.security.auth.token.JwtTokenData;
 import org.junit.Assert;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Objects;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = GarderieApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -85,11 +88,18 @@ public abstract class BaseGarderieITTest {
         return httpHeaders;
     }
 
+    public HttpEntity createUserHttpEntity(final String token, final Object object){
+        final HttpHeaders headers = this.createDefaultHeaders();
+        headers.set("x-auth-token", token);
+        final HttpEntity httpEntity = new HttpEntity(object, headers);
+        return httpEntity;
+    }
+
 
     public TokenDTO createOwnerToken() throws IOException {
 
         final SignUpDTO signUpDTO = new SignUpDTO();
-        signUpDTO.setEmailId("ittessdddtddw1@test.com");
+        signUpDTO.setEmailId("ittest@test.com");
         HttpEntity httpEntity = new HttpEntity(signUpDTO, this.createDefaultHeaders());
         ResponseEntity<GarderieResponse> responseEntity = (ResponseEntity<GarderieResponse>) this.executePostRequest("/garderie/api/signup/owner", httpEntity, GarderieResponse.class);
         GarderieResponse response = responseEntity.getBody();
@@ -111,6 +121,24 @@ public abstract class BaseGarderieITTest {
         TokenDTO tokenDTO = this.objectMapper.readValue(stringresponse, TokenDTO.class);
         return tokenDTO;
 
+    }
+
+
+    public TokenDTO createOrganisation( final TokenDTO ownerTokenDTO) throws IOException{
+        final Organisation organisation = new Organisation();
+        organisation.setOrgName("Integration test day care");
+
+        final HttpHeaders httpHeaders = this.createDefaultHeaders();
+        httpHeaders.set("x-auth-token", ownerTokenDTO.getToken());
+
+        final HttpEntity httpEntity = new HttpEntity(organisation, httpHeaders);
+        final ResponseEntity<GarderieResponse> responseEntity = (ResponseEntity<GarderieResponse>) this.executePostRequest("/garderie/organisation", httpEntity, GarderieResponse.class);
+
+        GarderieResponse updatedTokeResponse = responseEntity.getBody();
+
+        final String updatedJwtToken = this.objectMapper.writeValueAsString(updatedTokeResponse.getData("token"));
+        final TokenDTO updatedTokenDTO = this.objectMapper.readValue(updatedJwtToken, TokenDTO.class);
+        return updatedTokenDTO;
 
     }
 

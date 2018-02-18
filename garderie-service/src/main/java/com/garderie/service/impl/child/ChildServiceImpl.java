@@ -125,7 +125,22 @@ public class ChildServiceImpl implements ChildService {
     }
 
     @Override
+    public Child findChildById(String childId) {
+        return this.childRepository.findOne(childId);
+    }
+
+    @Override
     public void deleteChildById(String childId) {
         this.childRepository.delete(childId);
+    }
+
+    @Override
+    public Set<Child> getAllChildrensInClassroom(String classroomId) {
+        return this.childRepository.findChildByClassroomIdsIn(classroomId);
+    }
+
+    @Override
+    public Set<Child> getAllChildrensInOrganisation(String orgId) {
+        return this.childRepository.findByOrgId(orgId);
     }
 }

@@ -87,8 +87,5 @@ public class ChildIT extends BaseGarderieITTest{
         this.organisationService.deletedById(org.getId());
         this.childService.deleteChildById(updatedChild.getId());
 
-
-
-
     }
 }

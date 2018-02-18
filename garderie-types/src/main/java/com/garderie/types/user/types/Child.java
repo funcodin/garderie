@@ -3,7 +3,9 @@ package com.garderie.types.user.types;
 import com.garderie.types.AbstractPersistable;
 import com.garderie.types.user.info.Address;
 import com.garderie.types.user.info.MedicalInformation;
+import org.apache.commons.collections4.CollectionUtils;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Child extends AbstractPersistable {
@@ -58,6 +60,9 @@ public class Child extends AbstractPersistable {
     }
 
     public Set<String> getClassroomIds() {
+        if(CollectionUtils.isEmpty(classroomIds)) {
+            this.classroomIds = new HashSet<>();
+        }
         return this.classroomIds;
     }
 

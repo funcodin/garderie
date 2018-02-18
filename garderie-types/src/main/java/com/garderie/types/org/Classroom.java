@@ -1,10 +1,12 @@
 package com.garderie.types.org;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import com.garderie.types.AbstractPersistable;
 import com.garderie.types.user.info.Address;
+import org.apache.commons.collections4.CollectionUtils;
 
 public class Classroom extends AbstractPersistable{
 	private String orgId;
@@ -29,5 +31,19 @@ public class Classroom extends AbstractPersistable{
 
 	public void setStudentIds(Set<String> studentIds) {
 		this.studentIds = studentIds;
+	}
+
+	public void addStudentId( final String studentId ){
+		if(CollectionUtils.isEmpty(this.studentIds)) {
+			this.studentIds = new HashSet<>();
+		}
+		this.studentIds.add(studentId);
+	}
+
+	public void addStudentIds( final Set<String> studentIds) {
+		if(CollectionUtils.isEmpty(this.studentIds)){
+			this.studentIds = new HashSet<>();
+		}
+		this.studentIds.addAll(studentIds);
 	}
 }

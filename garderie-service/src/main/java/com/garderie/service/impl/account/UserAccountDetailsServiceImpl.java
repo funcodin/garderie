@@ -81,8 +81,13 @@ public class UserAccountDetailsServiceImpl implements UserAccountDetailsService,
             actionPermissions.add(ActionPermissions.ADD_TEACHER);
             actionPermissions.add(ActionPermissions.ADD_PICTURE);
             actionPermissions.add(ActionPermissions.ADD_CLASSROOM);
+            actionPermissions.add(ActionPermissions.UPDATE_CLASSROOM);
+            actionPermissions.add(ActionPermissions.GET_CLASSROOMS);
             actionPermissions.add(ActionPermissions.ADD_CHILD);
             actionPermissions.add(ActionPermissions.UPDATE_CHILD);
+            actionPermissions.add(ActionPermissions.ADD_STUDENT_TO_CLASSROOM);
+            actionPermissions.add(ActionPermissions.REMOVE_STUDENT_FROM_CLASSROOM);
+            actionPermissions.add(ActionPermissions.GET_ALL_CHILDRENS);
         }
 
         if(userAuthorities.contains(Authority.ROLE_PARENT)) {
@@ -94,11 +99,10 @@ public class UserAccountDetailsServiceImpl implements UserAccountDetailsService,
         if(userAuthorities.contains(Authority.ROLE_TEACHER)) {
             actionPermissions.add(ActionPermissions.ADD_ACTIVITY);
             actionPermissions.add(ActionPermissions.ADD_PICTURE);
+            actionPermissions.add(ActionPermissions.GET_ALL_CHILDRENS);
         }
 
         return actionPermissions;
-
     }
-
 
 }

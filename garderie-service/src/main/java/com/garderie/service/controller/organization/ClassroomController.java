@@ -25,7 +25,7 @@ public class ClassroomController {
         return response;
     }
 
-    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_CLASSROOM})
+    @PermissionsCheck(hasPermissions = {ActionPermissions.UPDATE_CLASSROOM})
     @RequestMapping(method = RequestMethod.PUT)
     public GarderieResponse updateClassroom(@RequestBody final Classroom classroom){
         final GarderieResponse response = new GarderieResponse();
@@ -36,23 +36,23 @@ public class ClassroomController {
 
     @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_STUDENT_TO_CLASSROOM})
     @RequestMapping(method = RequestMethod.PUT,value = "/addstudent")
-    public GarderieResponse addStudentsToClassroom(final Classroom classroom) {
+    public GarderieResponse addStudentsToClassroom(@RequestBody final Classroom classroom) {
         final GarderieResponse response = new GarderieResponse();
         final Classroom updatedClassroom = this.classroomService.addStudentsToClassroom(classroom);
         response.addData("classrooms",this.classroomService.findAllClassroomsByOrgId(classroom.getOrgId()));
         return response;
     }
 
-    @PermissionsCheck(hasPermissions = {ActionPermissions.REMOVE_STUDENT_TO_CLASSROOM})
+    @PermissionsCheck(hasPermissions = {ActionPermissions.REMOVE_STUDENT_FROM_CLASSROOM})
     @RequestMapping(method = RequestMethod.PUT,value = "/removestudent")
-    public GarderieResponse removeStudentsFromClassroom(final Classroom classroom) {
+    public GarderieResponse removeStudentsFromClassroom(@RequestBody final Classroom classroom) {
         final GarderieResponse response = new GarderieResponse();
         final Classroom updatedClassroom = this.classroomService.removeStudentsFromClassroom(classroom);
         response.addData("classrooms",this.classroomService.findAllClassroomsByOrgId(classroom.getOrgId()));
         return response;
     }
 
-    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_CLASSROOM})
+    @PermissionsCheck(hasPermissions = {ActionPermissions.GET_CLASSROOMS})
     @RequestMapping(method = RequestMethod.GET,value = "/{orgId}")
     public GarderieResponse findAllClassRoomsByOrgId(@PathVariable final String orgId) {
         final GarderieResponse garderieResponse = new GarderieResponse();

@@ -37,5 +37,20 @@ public class ChildController {
         this.childService.deleteChildById(childId);
     }
 
+    @PermissionsCheck(hasPermissions = {ActionPermissions.GET_ALL_CHILDRENS})
+    @RequestMapping(method = RequestMethod.GET, value = "/{classroomId}")
+    public GarderieResponse getAllChildrensInClassrooom(@PathVariable final String classroomId) {
+        final GarderieResponse response = new GarderieResponse();
+        response.addData("childrens",this.childService.getAllChildrensInClassroom(classroomId));
+        return response;
+    }
+
+    @PermissionsCheck(hasPermissions = {ActionPermissions.GET_ALL_CHILDRENS})
+    @RequestMapping(method = RequestMethod.GET, value = "/{orgId}")
+    public GarderieResponse getAllChildrensInOrg(@PathVariable final String orgId) {
+        final GarderieResponse response = new GarderieResponse();
+        response.addData("childrens", this.childService.getAllChildrensInOrganisation(orgId));
+        return response;
+    }
 
 }

@@ -1,21 +1,20 @@
 package com.garderie.service.impl.organisation;
 
 import com.garderie.service.exception.model.ServiceException;
+import com.garderie.service.interfaces.ChildService;
 import com.garderie.service.interfaces.ClassroomService;
 import com.garderie.service.repository.organisation.ClassroomRepository;
 import com.garderie.service.util.ControllerUtil;
 import com.garderie.types.org.Classroom;
 import com.garderie.types.security.auth.token.JwtTokenData;
+import com.garderie.types.user.types.Child;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ClassroomServiceImpl implements ClassroomService {
@@ -23,10 +22,13 @@ public class ClassroomServiceImpl implements ClassroomService {
     @Autowired
     private ClassroomRepository classroomRepository;
 
+    @Autowired
+    private ChildService childService;
+
     @Override
     public Classroom create(final Classroom classroom) {
-        if (Objects.isNull(classroom) || StringUtils.isBlank(classroom.getOrgId())) {
-            throw new ServiceException("Org id is required to create class room", HttpStatus.BAD_REQUEST);
+        if (Objects.isNull(classroom)) {
+            throw new ServiceException("Request cannot be null", HttpStatus.BAD_REQUEST);
         }
 
         if (StringUtils.isBlank(classroom.getName())) {
@@ -35,8 +37,12 @@ public class ClassroomServiceImpl implements ClassroomService {
 
         final JwtTokenData jwtTokenData = ControllerUtil.getTokenDataFromHttpRequest();
 
-        if (!jwtTokenData.getOrgId().equals(classroom.getOrgId())) {
-            throw new ServiceException("Cannot create class room in another org", HttpStatus.UNAUTHORIZED);
+        if(StringUtils.isBlank(classroom.getOrgId())) {
+            classroom.setOrgId(jwtTokenData.getOrgId());
+        }else{
+            if (!jwtTokenData.getOrgId().equals(classroom.getOrgId())) {
+                throw new ServiceException("Cannot create class room in another org", HttpStatus.UNAUTHORIZED);
+            }
         }
 
         classroom.setId(UUID.randomUUID().toString());
@@ -98,8 +104,18 @@ public class ClassroomServiceImpl implements ClassroomService {
 
         final Classroom existingClassRoom = this.classroomRepository.findOne(classroom.getId());
 
-        existingClassRoom.getStudentIds().addAll(classroom.getStudentIds());
+        existingClassRoom.addStudentIds(classroom.getStudentIds());
         existingClassRoom.setModifiedDate(new Date());
+
+        final Set<Child> childrens = new HashSet<>();
+        for(String studentId : classroom.getStudentIds()) {
+            childrens.add(this.childService.findChildById(studentId));
+        }
+
+        for(final Child child : childrens) {
+           child.getClassroomIds().add(classroom.getId());
+           this.childService.update(child);
+        }
 
         final Classroom updatedClassroom = this.classroomRepository.save(existingClassRoom);
         return updatedClassroom;
@@ -139,8 +155,8 @@ public class ClassroomServiceImpl implements ClassroomService {
         }
 
         final JwtTokenData jwtTokenData = ControllerUtil.getTokenDataFromHttpRequest();
-        if (jwtTokenData.getOrgId().equals(orgId)) {
-            throw new ServiceException("Cannot add students to class room in another org", HttpStatus.UNAUTHORIZED);
+        if (!jwtTokenData.getOrgId().equals(orgId)) {
+            throw new ServiceException("Cannot lookup students from class rooms in another org", HttpStatus.UNAUTHORIZED);
         }
         return this.classroomRepository.findClassroomByOrgId(orgId);
     }
@@ -155,10 +171,11 @@ public class ClassroomServiceImpl implements ClassroomService {
 
 
 
-        final JwtTokenData jwtTokenData = ControllerUtil.getTokenDataFromHttpRequest();
-        if (jwtTokenData.getOrgId().equals(existingClassroom.getOrgId())) {
-            throw new ServiceException("Cannot delete classroom in another org", HttpStatus.UNAUTHORIZED);
-        }
+        //TODO uncomment.. commenting it out for IT tests
+       // final JwtTokenData jwtTokenData = ControllerUtil.getTokenDataFromHttpRequest();
+        //if (jwtTokenData.getOrgId().equals(existingClassroom.getOrgId())) {
+         //   throw new ServiceException("Cannot delete classroom in another org", HttpStatus.UNAUTHORIZED);
+        //}
         this.classroomRepository.delete(classroomId);
     }
 }

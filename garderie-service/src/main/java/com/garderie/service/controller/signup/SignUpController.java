@@ -11,6 +11,7 @@ import com.garderie.service.validator.dto.SignUpDTOValidator;
 import com.garderie.service.validator.dto.SignupWithCodeValidator;
 import com.garderie.types.GarderieResponse;
 import com.garderie.types.dto.SignUpDTO;
+import com.garderie.types.security.auth.Authority;
 import com.garderie.types.security.auth.UserAccountDetails;
 import com.garderie.types.security.auth.permissions.ActionPermissions;
 import com.garderie.types.security.auth.token.JwtTokenData;
@@ -52,7 +53,7 @@ public class SignUpController {
         return response;
     }
 
-    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_ORGANISATION})
+    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_ORGANISATION}, hasAuthority = {Authority.ROLE_OWNER})
     @RequestMapping(method = RequestMethod.POST, value = "/parent")
     public GarderieResponse signUpParent(@RequestBody final SignUpDTO signUpDTO) {
         final GarderieResponse response = new GarderieResponse();
@@ -63,7 +64,7 @@ public class SignUpController {
         return response;
     }
 
-    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_ORGANISATION})
+    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_ORGANISATION}, hasAuthority = {Authority.ROLE_OWNER})
     @RequestMapping(method = RequestMethod.POST, value = "/teacher")
     public GarderieResponse signUpTeacher(@RequestBody final SignUpDTO signUpDTO) {
         final GarderieResponse response = new GarderieResponse();

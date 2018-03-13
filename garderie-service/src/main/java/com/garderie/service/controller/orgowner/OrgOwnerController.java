@@ -5,6 +5,7 @@ import com.garderie.service.interfaces.OrgOwnerService;
 import com.garderie.service.util.ControllerUtil;
 import com.garderie.types.GarderieResponse;
 import com.garderie.types.org.OrgOwner;
+import com.garderie.types.security.auth.Authority;
 import com.garderie.types.security.auth.permissions.ActionPermissions;
 import com.garderie.types.security.auth.token.JwtTokenData;
 import com.garderie.types.user.types.Teacher;
@@ -19,7 +20,7 @@ public class OrgOwnerController {
     private OrgOwnerService orgOwnerService;
 
 
-    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_OWNER})
+    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_OWNER}, hasAuthority = {Authority.ROLE_OWNER})
     @RequestMapping(method = RequestMethod.POST)
     public GarderieResponse createOrgOwner(@RequestBody final OrgOwner orgOwner ){
         final GarderieResponse garderieResponse = new GarderieResponse();
@@ -28,7 +29,7 @@ public class OrgOwnerController {
         return garderieResponse;
     }
 
-    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_OWNER})
+    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_OWNER}, hasAuthority = {Authority.ROLE_OWNER})
     @RequestMapping(method = RequestMethod.PUT)
     public GarderieResponse updateOrgOwner( @RequestBody final OrgOwner orgOwner) {
         final GarderieResponse response = new GarderieResponse();

@@ -5,6 +5,7 @@ import com.garderie.service.aop.PermissionsCheck;
 import com.garderie.service.interfaces.ClassroomService;
 import com.garderie.types.GarderieResponse;
 import com.garderie.types.org.Classroom;
+import com.garderie.types.security.auth.Authority;
 import com.garderie.types.security.auth.permissions.ActionPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class ClassroomController {
     @Autowired
     private ClassroomService classroomService;
 
-    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_CLASSROOM})
+    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_CLASSROOM}, hasAuthority = {Authority.ROLE_OWNER})
     @RequestMapping(method = RequestMethod.POST)
     public GarderieResponse createClassroom(@RequestBody final Classroom classroom) {
         final GarderieResponse response = new GarderieResponse();
@@ -25,7 +26,7 @@ public class ClassroomController {
         return response;
     }
 
-    @PermissionsCheck(hasPermissions = {ActionPermissions.UPDATE_CLASSROOM})
+    @PermissionsCheck(hasPermissions = {ActionPermissions.UPDATE_CLASSROOM}, hasAuthority = {Authority.ROLE_OWNER})
     @RequestMapping(method = RequestMethod.PUT)
     public GarderieResponse updateClassroom(@RequestBody final Classroom classroom){
         final GarderieResponse response = new GarderieResponse();
@@ -34,7 +35,7 @@ public class ClassroomController {
         return response;
     }
 
-    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_STUDENT_TO_CLASSROOM})
+    @PermissionsCheck(hasPermissions = {ActionPermissions.ADD_STUDENT_TO_CLASSROOM}, hasAuthority = {Authority.ROLE_OWNER,Authority.ROLE_TEACHER})
     @RequestMapping(method = RequestMethod.PUT,value = "/addstudent")
     public GarderieResponse addStudentsToClassroom(@RequestBody final Classroom classroom) {
         final GarderieResponse response = new GarderieResponse();
@@ -43,7 +44,7 @@ public class ClassroomController {
         return response;
     }
 
-    @PermissionsCheck(hasPermissions = {ActionPermissions.REMOVE_STUDENT_FROM_CLASSROOM})
+    @PermissionsCheck(hasPermissions = {ActionPermissions.REMOVE_STUDENT_FROM_CLASSROOM}, hasAuthority = {Authority.ROLE_OWNER,Authority.ROLE_TEACHER})
     @RequestMapping(method = RequestMethod.PUT,value = "/removestudent")
     public GarderieResponse removeStudentsFromClassroom(@RequestBody final Classroom classroom) {
         final GarderieResponse response = new GarderieResponse();
@@ -52,7 +53,7 @@ public class ClassroomController {
         return response;
     }
 
-    @PermissionsCheck(hasPermissions = {ActionPermissions.GET_CLASSROOMS})
+    @PermissionsCheck(hasPermissions = {ActionPermissions.GET_CLASSROOMS}, hasAuthority = {Authority.ROLE_OWNER, Authority.ROLE_TEACHER})
     @RequestMapping(method = RequestMethod.GET,value = "/{orgId}")
     public GarderieResponse findAllClassRoomsByOrgId(@PathVariable final String orgId) {
         final GarderieResponse garderieResponse = new GarderieResponse();
@@ -60,7 +61,7 @@ public class ClassroomController {
         return garderieResponse;
     }
 
-    @PermissionsCheck(hasPermissions = {ActionPermissions.DELETE_CLASSROOM})
+    @PermissionsCheck(hasPermissions = {ActionPermissions.DELETE_CLASSROOM}, hasAuthority = {Authority.ROLE_OWNER})
     @RequestMapping(method = RequestMethod.DELETE,value = "/{classroomId}")
     public GarderieResponse deleteClassRoomByOrgId(@PathVariable final String classroomId) {
         final GarderieResponse garderieResponse = new GarderieResponse();
